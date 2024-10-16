@@ -1,0 +1,64 @@
+h2{
+    color: #4a90e2;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .hero-details {
+    margin: 20px 0;
+  }
+
+  .hero-details label {
+    font-weight: bold;
+  }
+
+  .hero-details input {
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .heroes {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+
+  .hero-item {
+    margin-bottom: 10px;
+  }
+
+  .hero-button {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 2px solid #4a90e2;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .hero-button:hover {
+    background-color: #4a90e2;
+    color: white;
+  }
+
+  .badge {
+    display: inline-block;
+    background-color: #4a90e2;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+    margin-right: 10px;
+  }
+
+  .name {
+    font-weight: bold;
+    font-size: 18px;
+  }
+.selected{
+  background-color: #007bff; /* Highlight color */
+  color: white; 
+}
