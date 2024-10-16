@@ -1,0 +1,1 @@
+Dev Training is a collection of everything I've learned during my development training. This repository stores notes, code snippets, projects, and best practices to document my learning journey and share useful resources for future reference.
