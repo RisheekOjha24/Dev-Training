@@ -27,11 +27,12 @@ console.log(5<3) //false;
 
 let isTrue = true;
 let isFalse = false;
+// below are logical operator
 console.log(isTrue && isFalse); // false
 console.log(isTrue || isFalse);  // true
 console.log(!isTrue);             // false
 
-// 5. Bitwise Operators
+// 5. Bitwise Operators (4)
 
 console.log(5 & 3);  // Bitwise AND: 1
 console.log(5 | 3);  // Bitwise OR: 7

@@ -14,3 +14,4 @@ const fruits = ['apple', 'banana', 'mango'];
 
 console.log(fruits.includes('banana')); // Output: true
 console.log(fruits.includes('orange')); // Output: false
+
