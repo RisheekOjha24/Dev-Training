@@ -1,0 +1,17 @@
+<section class="schedule-section spad pt-4">
+    <div class="container">
+        <div class="row">
+            @for (item of eventList;track $index) {
+                <div class="col-3 p-2">
+                    <div class="card" >
+                        <img class="card-img-top" src="item.imageUrl" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title">{{item.eventName}}</h5>
+                           <a [routerLink]="['/event/',item.eventId]" class="btn btn-primary">Book</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
