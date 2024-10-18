@@ -1,4 +1,5 @@
 "use strict";
+// In TypeScript, interfaces are a fundamental feature that allows you to define the shape of objects, enforce type safety, and create more maintainable and readable code. 
 // Example usage
 const user10 = {
     id: 10,

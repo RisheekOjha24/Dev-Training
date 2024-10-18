@@ -7,9 +7,10 @@
 
 // 1. Defining object signature using interface
 // in interface we can define the obect keys with its types
+
 interface User {
    readonly username:string,
-    email?:string
+    email?:string,
     age:number
 }
 

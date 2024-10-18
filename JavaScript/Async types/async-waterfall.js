@@ -3,7 +3,7 @@ const async = require('async');
 // async working
 // Sequential Execution: async.waterfall runs each function in the array one at a time. When one function finishes (using callback()), the control moves to the next function. This ensures the order of execution is maintained.
 
-// Passing Data: Each function can pass its result to the next one by calling callback(null, result). The result is passed as an argument to the next function in the sequence, ensuring smooth data flow.
+// Passing Data: Eajavaxxrot can pass its result to the next one by calling callback(null, result). The result is passed as an argument to the next function in the sequence, ensuring smooth data flow.
 
 // Error Handling: The first argument in callback() is reserved for errors. If an error occurs, the control is transferred directly to a final error handler, skipping the remaining functions.
 
@@ -47,4 +47,3 @@ async.waterfall([
     console.log("Final result:", result);  // Output: "Orders processed and notification sent to John"
   }
 });
-
