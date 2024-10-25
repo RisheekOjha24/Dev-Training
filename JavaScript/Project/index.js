@@ -43,7 +43,7 @@ function updateDOM(items) {
         });
     } else {
         const listItem = document.createElement('li');
-        listItem.textContent = "No data available"; // Show message if no items
+        listItem.textContent = "No data available"; 
         listItem.classList.add('list-group-item');
         dataList.appendChild(listItem);
     }
