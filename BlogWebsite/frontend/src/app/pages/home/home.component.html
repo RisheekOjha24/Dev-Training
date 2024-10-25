@@ -1,1 +1,16 @@
-<p>home works!</p>
+<div class="home-container">    
+    <div *ngIf="blogs.length > 0; else noBlogs" class="blog-list">
+      <div *ngFor="let blog of blogs" class="blog-post">
+        <h3>{{ blog.title }}</h3>
+        <p><strong>Author:</strong> {{ blog.authorName }}</p>
+        <p>{{ blog.content }}</p>
+        <p><small>Published on: {{ blog.createdAt | date: 'short' }}</small></p>
+        <hr />
+      </div>
+    </div>
+  
+    <ng-template #noBlogs>
+      <p>No blogs available at the moment. Please check back later!</p>
+    </ng-template>
+  </div>
+  

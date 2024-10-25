@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,9 +9,9 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit,AfterViewInit{
   title = 'blogWebsite';
-
+  userName:string|null=null;
   router= inject(Router);
 
   isLoginOrRegisterPage(): boolean {
@@ -19,8 +19,16 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userObj = JSON.parse(user);
+      this.userName = userObj.name;
+    }
   }
+
+  ngAfterViewInit(): void {
+  }
+
   logout(): void {
     const confirmed = confirm('Are you sure you want to logout?');
     

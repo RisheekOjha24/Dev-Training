@@ -139,7 +139,6 @@ We can also use *ngIf within *ngFor to conditionally display items based on cert
 
 # Any function which is returning observable type of data we can subscribe that.
 
-
 # Using interface with http.get<>
 
 <!-- Below ApiResponse is a user defined interface which contains type of data we are getting. -->
@@ -187,6 +186,26 @@ observable.subscribe({
 <!-- next: Runs whenever a value is emitted (success case).
 error: Runs if an error occurs, and no further emissions will happen.
 complete: Runs when the observable finishes emitting values without errors. -->
+
+# Module, Component, Directive and DirectiveModules:
+
+## Module
+Definition: Modules in Angular are containers for a block of related code. They organize an application into cohesive chunks.
+
+## Component
+Components are the building blocks of an Angular application. Each component controls a part of the user interface (UI).
+Purpose: A component combines logic (TypeScript class), a template (HTML view), and styles (CSS) to create a UI element.
+
+## Directive
+Directives in Angular allows you to extend HTML elements by adding behavior or modifying the DOM dynamically.
+
+Attribute Directives: These change the appearance or behavior of an element, component, or other directives (e.g., ngClass, ngStyle).
+Structural Directives: These change the DOM structure by adding or removing elements (e.g., *ngIf, *ngFor, *ngSwitch).
+
+## Decorator
+ Decorators are functions that add metadata to classes, properties, methods, or parameters. They tell Angular how to process and use the items.
+ @Component,@Injectable,etc.
+
 
 
 # Modern Control flow statement from Angular 17

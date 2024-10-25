@@ -1,21 +1,24 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="!isLoginOrRegisterPage()">
     <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/home">Blogo Pedia</a>
+        <a class="navbar-brand" routerLink="/home" routerLinkActive="active-link" style="font-weight: 400;">Blogo Pedia</a>
 
         <div class="collapse navbar-collapse justify-content-center">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/home">Home</a>
+                    <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/my-blogs">My Blogs</a>
+                    <a class="nav-link" routerLink="/my-blogs" routerLinkActive="active-link">My Blogs</a>
                 </li>
             </ul>
         </div>
-
+        @if(userName){
+        <h5 style="color: white;margin: 1rem;">Welcome {{userName}} </h5>
+        }
         <button class="btn btn-danger ms-auto logout-btn" (click)="logout()">Logout</button>
     </div>
 </nav>
+
 
 <!-- Router outlet for displaying components -->
 <router-outlet></router-outlet>
