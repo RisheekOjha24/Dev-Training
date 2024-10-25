@@ -56,13 +56,13 @@ To use ngModel you have to import FormsModule
 
 ngModel is designed for form elements like <input>, <textarea> and <select>, which can capture user input, you cannot use it with <h1> tag etc.
 
-# How [(ngModel)] Works ?
+## How [(ngModel)] Works ?
 
-Two-Way Binding: When you use [(ngModel)]="currDate", Angular automatically sets up two bindings:
+## Two-Way Binding: When you use [(ngModel)]="currDate", Angular automatically sets up two bindings:
 
-Property Binding: It binds the value of the input field to the currDate property in the component. This means that when the component is initialized, the input's value will be set to the current value of currDate.
+## Property Binding: It binds the value of the input field to the currDate property in the component. This means that when the component is initialized, the input's value will be set to the current value of currDate.
 
-Event Binding: It listens for changes in the input field. When a user types into the input, Angular captures the change event and updates the currDate property in the component.
+## Event Binding: It listens for changes in the input field. When a user types into the input, Angular captures the change event and updates the currDate property in the component.
 
 # Fun Fact: The [(ngModel)] syntax is known as banana in a box syntax in Angular, and it represents a combination of two-way data binding. Square Brackets [ ] - Property Binding and Parentheses ( ) - Event Binding.
 
@@ -100,7 +100,7 @@ now we can use http services like get,post,etc.
 ngOnInit is called after the constructor and after Angular has finished initializing the component’s input properties.
 
 ## 5. To send a request we create a function
-
+```
 <!-- get request -->
 getAllRoles(){
     this.http.get("https://freeapi.miniprojectideas.com/api/ClientStrive/GetAllRoles").
@@ -182,7 +182,7 @@ observable.subscribe({
     // Optional: Handle when observable completes
   }
 });
-
+```
 <!-- next: Runs whenever a value is emitted (success case).
 error: Runs if an error occurs, and no further emissions will happen.
 complete: Runs when the observable finishes emitting values without errors. -->
