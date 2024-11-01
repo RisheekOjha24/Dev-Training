@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
   userName: string | null = null;
   email: string | null = null;
   isAdmin: boolean|null= null;
+  isSuspended:boolean|null=null;
   private router = inject(Router);
   private authService = inject(AuthService);
   isSidebarCollapsed = false;
@@ -31,17 +32,18 @@ export class AppComponent implements OnInit{
     if (user) {
       const userObj = JSON.parse(user);
       this.userName = userObj.name;
-      this.email = userObj?.email;
-      this.isAdmin = userObj?.isAdmin;
+      this.email = userObj.email;
+      this.isAdmin = userObj.isAdmin;
+      this.isSuspended = userObj.isSuspended;
 
     } else {
       this.authService.currentUser.subscribe((activeUser) => {
-        this.userName = activeUser?.username || null;
-        this.email = activeUser?.email || null;
-        this.isAdmin = activeUser?.isAdmin || null;
+        this.userName = activeUser?.username ;
+        this.email = activeUser?.email;
+        this.isAdmin = activeUser?.isAdmin;
+        this.isSuspended = activeUser.isSuspended;
       });
     }
-    console.log(this.userName,this.isAdmin,this.email);
   }
 
   signIn():void{

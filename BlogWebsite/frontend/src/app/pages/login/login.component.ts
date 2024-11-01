@@ -58,7 +58,8 @@ export class LoginComponent {
 
         localStorage.setItem('user', JSON.stringify(user));
         
-        this.router.navigate(['/home']);
+        if(user.isSuspended)this.router.navigate(['/suspended']);
+        else this.router.navigate(['/home']);
       },
       error: (error) => {
         console.log(error);
