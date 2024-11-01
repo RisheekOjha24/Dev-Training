@@ -1,23 +1,45 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private baseUrl = 'http://localhost:5000/api/auth';
 
-  register(user: { name:string,email: string; password: string,confirmPassword:string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/register`,user);
+
+  currentUser = new BehaviorSubject<{ username: string; email: string,isAdmin:boolean }>(
+  {"username": "", "email": "",isAdmin:false}
+  );
+
+  register(user: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/register`, user);
   }
 
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/login`,credentials);
+    return this.http.post<any>(`${this.baseUrl}/login`, credentials);
   }
 
+  //Method for emiting values
 
+  setCurrentUser({
+    username,
+    email,
+    isAdmin
+  }: {
+    username: string;
+    email: string;
+    isAdmin:boolean
+  }): void {
+    // Emit the new user object
+    this.currentUser.next({ username, email,isAdmin });
+  }
 }

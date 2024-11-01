@@ -1,0 +1,35 @@
+.container {
+  max-width: 800px; /* Limit max width for a centered look */
+}
+
+.card {
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.btn-primary {
+  background-color: #ff4500;
+  border-color: #ff4500;
+}
+
+.btn-primary:hover {
+  background-color: #ff5722;
+  border-color: #ff5722;
+}
+
+input:focus{
+  border: 2px solid black;
+}

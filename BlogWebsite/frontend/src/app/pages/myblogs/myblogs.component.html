@@ -1,1 +1,43 @@
-<p>myblogs works!</p>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8" *ngIf="blogs.length>0; else noBlogs">
+
+      <!-- Search Bar -->
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by title"
+          [(ngModel)]="searchTerm"
+          (input)="filterBlogs()"
+        />
+     
+      </div>
+
+      <!-- Sort Options -->
+      <div class="mb-3">
+        <label for="sortBy" class="form-label">Sort By:</label>
+        <select class="form-select" id="sortBy" [(ngModel)]="sortBy" (change)="sortBlogs()">
+          <option value="sortItem">Sort Item</option>
+          <option value="recent">Most Recent</option>
+          <option value="oldest">Oldest</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div *ngFor="let blog of filteredBlogs" class="col-md-12 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ blog.title }}</h5>
+              <p class="card-text text-muted">{{ blog.createdAt | date: 'MMM d, y, h:mm a' }}</p>
+              <a class="btn btn-primary" (click)="navigateToView(blog._id)">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <ng-template #noBlogs>
+        <h4 style="font-family:Syne,sans-serif;">Looks like we haven't published any blogs yet! Check back soon for exciting content.</h4>
+      </ng-template>
+  </div>
+</div>

@@ -8,6 +8,7 @@ const dbConnect=async( )=>{
     }
     catch(err){
         console.log("Someone unknown error occured during connection");
+        console.log(err);
     }
 }
 

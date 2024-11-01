@@ -20,16 +20,18 @@ const login = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "WFH", { expiresIn: "1h" });
 
 
     res.status(200).json({
       token,
         name: user.name,
-        email: user.email
+        email: user.email,
+        isAdmin:user.isAdmin
     });
   } catch (err) {
     // Handle server error
+    console.log(err);
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 };
@@ -38,7 +40,6 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   
-
   if (password !== confirmPassword) {
     return res.status(400).json({ msg: "Passwords don't match" });
   }

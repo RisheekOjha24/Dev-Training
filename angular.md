@@ -621,3 +621,8 @@ The result is a QueryList, which is an iterable collection of the matched elemen
           header.nativeElement.style.color='green'; //will set green color to all matching selector tags
         });
     }
+
+# Singletion Service 
+In Angular, when you use the inject function to retrieve a service, you get a singleton instance of that service by default. This means that the same instance of the service is shared across all components, directives, and other services that inject it.
+In Angular, services provided at the root level (using the providedIn: 'root' metadata) are singletons.
+

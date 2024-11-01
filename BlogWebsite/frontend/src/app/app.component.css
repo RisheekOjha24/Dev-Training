@@ -14,11 +14,41 @@
 }
 
 .logout-btn{
-    /* width: 10px; */
     font-size: 15px;
     padding: 2px 10px;
 }
 .active-link{
     color: white !important;
     font-weight: bolder;
+}
+
+svg{
+    filter: invert();
+    transform: scale(1.25) translateY(2px);
+}
+.penImg{
+    margin:1rem 2rem 0 0;
+    cursor: pointer;
+    text-decoration-color:black ;
+        filter: brightness(100)
+}
+.penImg>p{
+    font-family: Syne,cursive;
+    font-size: 14px;
+}
+.bold{
+    /* background-color: #a89393; */
+    text-decoration-color:rgb(236, 236, 236);
+    filter: brightness(100)
+}
+
+.sidebar {
+    max-width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.content {
+    margin-left: 250px; /* Equal to sidebar width */
 }

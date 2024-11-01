@@ -23,7 +23,7 @@
 
                   @if(loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required'])
                   {
-                      <span>This is Required</span>
+                      <span>Email is Required</span>
                   }
                   @else if(loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']){
                       
@@ -43,11 +43,11 @@
 
                   @if(loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required'])
                   {
-                      <span>This is Required</span>
+                      <span>Password is Required</span>
                   }
                   @else if(loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['minlength']){
                       
-                      <span>Password should be minimum 4 characters</span>
+                      <span>Password should be minimum 6 characters</span>
                   }
               </div>
             </div>
@@ -60,9 +60,9 @@
             <div class="text-center text-lg-start mt-4 pt-2">
 
               <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
-                style="padding-left: 2rem; padding-right: 2rem;font-size: 16px;" (click)="onSave()">Login</button>
+                style="padding-left: 2rem; padding-right: 2rem;font-size: 16px;" (click)="onLogin()">Login</button>
 
-              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
+              <p class="fw-bold mt-2 pt-1 mb-0">Don't have an account? 
                 <a  class="link-danger" routerLink="/register">Register</a></p>
             </div>
   

@@ -2,16 +2,19 @@ const express = require('express');
 const router = express.Router();
 const Blog = require('../model/blogSchema');
 const User = require("../model/userSchema");
-const {newBlog,allBlogs,blogById,addComment} = require("../controller/blogApi");
+const {newBlog,allBlogs,blogById,addComment,myBlog} = require("../controller/blogApi");
+const upload = require("../middleware/multer.middleware");
 
 //  /api/blog is home url
-router.post('/newblog', newBlog);
+router.post("/newblog", upload.single("image"), newBlog);
 
 
-router.get('/blogs', allBlogs);
+router.get('/allBlogs', allBlogs);
 
-router.get('/blogs/:id', blogById);
+router.post('/viewBlogs', blogById);
 
 router.post('/blogs/:id/comments', addComment);
+
+router.post('/myBlogs',myBlog)
 
 module.exports = router;

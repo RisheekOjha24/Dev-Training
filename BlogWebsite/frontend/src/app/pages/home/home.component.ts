@@ -1,31 +1,66 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BlogService } from '../../service/blog.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,DatePipe],
+  imports: [CommonModule, DatePipe, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   
-  blogService=inject(BlogService);
+  blogService = inject(BlogService);
   blogs: any[] = [];
+  filteredBlogs: any[] = []; // Array for filtered blogs
+  searchTerm: string = ''; // Search term for filtering
+  sortBy: string = 'sortItem'; // Sorting criteria
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.fetchBlogs();
   }
+
   fetchBlogs(): void {
     this.blogService.getAllBlogs().subscribe({
       next: (data) => {
-        this.blogs = data; // Assign the fetched data to the blogs array
-        console.log(data);
+        this.blogs = data.filter((blog)=>blog.approved===true);
+        this.filteredBlogs = this.blogs; // Initialize filtered blogs
       },
       error: (error) => {
         console.error('Error fetching blogs:', error);
-      }
+      },
     });
+  }
+
+  filterBlogs(): void {
+    this.filteredBlogs = this.blogs.filter(
+      (blog) =>
+        blog.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        blog.authorName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.sortBlogs(); // Sort after filtering
+  }
+
+  sortBlogs(): void {
+    if (this.sortBy === 'recent') {
+      this.filteredBlogs.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    } else {
+      this.filteredBlogs.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+    }
+  }
+
+  navigateToBlog(blogId: number): void {
+    console.log(blogId, 'it is');
+    this.router.navigate([`/viewBlog/${blogId}`]);
   }
 }
