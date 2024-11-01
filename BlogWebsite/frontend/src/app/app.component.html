@@ -22,11 +22,16 @@
           <p class="text-white">Write</p>
       </a>
 
-      <div class="text-white mb-4 text-center" style="margin-right:1rem;">
-          <h6>Welcome {{ userName }}</h6>
+      <div class="text-white mb-4 text-center" style="margin:1rem;">
+          <h6 class="text-wrap">Welcome {{ userName }}</h6>
       </div>
-
+      @if(userName)
+      {
       <button class="btn btn-danger logout-btn" (click)="logout()">Logout</button>
+        }
+      @else{
+        <button class="btn btn-primary signIn-btn" (click)="signIn()">Sign In</button>
+      }
   </nav>
 
   <!-- Main Content -->

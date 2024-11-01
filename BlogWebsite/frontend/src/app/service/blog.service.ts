@@ -14,11 +14,10 @@ export class BlogService {
     return this.http.get<any[]>(`${this.baseUrl}/allBlogs`);
   }
 
-  getBlogById(blogIdAndEmail: {
-    email: string;
+  getBlogById(blogId: {
     blogId: string;
   }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/viewBlogs`, blogIdAndEmail);
+    return this.http.post<any>(`${this.baseUrl}/viewBlogs`, blogId);
   }
 
   getBlogsByEmail(email: string): Observable<any> {

@@ -11,8 +11,8 @@ export class AuthService {
   private baseUrl = 'http://localhost:5000/api/auth';
 
 
-  currentUser = new BehaviorSubject<{ username: string; email: string,isAdmin:boolean }>(
-  {"username": "", "email": "",isAdmin:false}
+  currentUser = new BehaviorSubject<{ username: string; email: string,isAdmin:boolean,isSuspended:boolean }>(
+    {"username": "", "email": "",isAdmin:false,isSuspended:false}
   );
 
   register(user: {
@@ -33,13 +33,15 @@ export class AuthService {
   setCurrentUser({
     username,
     email,
-    isAdmin
+    isAdmin,
+    isSuspended
   }: {
     username: string;
     email: string;
-    isAdmin:boolean
+    isAdmin:boolean;
+    isSuspended:boolean
   }): void {
     // Emit the new user object
-    this.currentUser.next({ username, email,isAdmin });
+    this.currentUser.next({ username, email,isAdmin,isSuspended });
   }
 }

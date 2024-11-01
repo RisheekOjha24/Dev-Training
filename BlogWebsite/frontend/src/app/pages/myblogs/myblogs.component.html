@@ -16,8 +16,7 @@
 
       <!-- Sort Options -->
       <div class="mb-3">
-        <label for="sortBy" class="form-label">Sort By:</label>
-        <select class="form-select" id="sortBy" [(ngModel)]="sortBy" (change)="sortBlogs()">
+        <select aria-label="wwo" class="form-select" id="sortBy" [(ngModel)]="sortBy" (change)="sortBlogs()">
           <option value="sortItem">Sort Item</option>
           <option value="recent">Most Recent</option>
           <option value="oldest">Oldest</option>
@@ -37,7 +36,9 @@
       </div>
       </div>
       <ng-template #noBlogs>
-        <h4 style="font-family:Syne,sans-serif;">Looks like we haven't published any blogs yet! Check back soon for exciting content.</h4>
+        <h4 style="font-family:Syne,sans-serif;">Looks like you haven't published any blogs yet!  We'd love to hear your stories—start creating today </h4>
+
+        <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" class="lottie-animation-box"/>
       </ng-template>
   </div>
 </div>

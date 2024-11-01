@@ -27,7 +27,8 @@ const login = async (req, res) => {
       token,
         name: user.name,
         email: user.email,
-        isAdmin:user.isAdmin
+        isAdmin:user.isAdmin,
+        isSuspended:user.isSuspended
     });
   } catch (err) {
     // Handle server error

@@ -1,0 +1,20 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminService {
+  constructor(private http: HttpClient) {}
+
+  private baseUrl = 'http://localhost:5000/api/admin';
+
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/allUsers`);
+  }
+
+  suspendUser(id: string): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/suspend`, {id});
+  }
+}

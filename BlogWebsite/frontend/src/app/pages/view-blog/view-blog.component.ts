@@ -23,22 +23,15 @@ export class ViewBlogComponent implements OnInit {
   email: string | null = null;
 
   ngOnInit() {
-    const blogId = this.route.snapshot.paramMap.get('id');
+    const blogId = this.route.snapshot.paramMap.get('id')||"";
 
-    const user = localStorage.getItem('user');
-    if (user) {
-      const userObj = JSON.parse(user);
-      this.username = userObj.name;
-      this.email = userObj.email;
-    }
-
-    if (blogId && this.email) {
-      this.fetchBlog({ email: this.email, blogId });
-    }
+    // if (blogId && this.email) {
+      this.fetchBlog(blogId );
+    // }
   }
 
-  fetchBlog(blogIdAndEmail: { email: string; blogId: string }) {
-    this.blogService.getBlogById(blogIdAndEmail).subscribe({
+  fetchBlog(blogId: string) {
+    this.blogService.getBlogById({blogId}).subscribe({
       next: (blog) => {
         this.blog = blog;
       },

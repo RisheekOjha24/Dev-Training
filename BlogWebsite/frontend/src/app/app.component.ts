@@ -1,3 +1,4 @@
+import { routes } from './app.routes';
 import { AuthService } from './service/auth.service';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ import { swalAlert } from './components/swalAlert';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit{
   title = 'blogWebsite';
   userName: string | null = null;
   email: string | null = null;
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.userName = userObj.name;
       this.email = userObj?.email;
       this.isAdmin = userObj?.isAdmin;
+
     } else {
       this.authService.currentUser.subscribe((activeUser) => {
         this.userName = activeUser?.username || null;
@@ -42,10 +44,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     console.log(this.userName,this.isAdmin,this.email);
   }
 
-  ngAfterViewInit(): void {
-  //  console.log(this.isAdmin);
+  signIn():void{
+    this.router.navigateByUrl('/login')
   }
-
   async logout(): Promise<void> {
     const result = await swalAlert(
       'warning',
@@ -54,9 +55,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     );
 
     if (result.isConfirmed) {
-      this.authService.setCurrentUser({username:"",email:"",isAdmin:false})
+      this.authService.setCurrentUser({username:"",email:"",isAdmin:false,isSuspended:false})
       localStorage.clear();
-      this.router.navigate(['/login']);
+       window.location.href = '/login';
     }
   }
 }

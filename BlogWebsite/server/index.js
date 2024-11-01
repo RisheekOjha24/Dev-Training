@@ -4,6 +4,7 @@ const cors = require("cors");
 const dbConnect = require("./dbConnect");
 const authRoutes=require("./routes/authRoutes");
 const blogRoutes=require("./routes/blogRoutes");
+const adminRoutes=require("./routes/adminRoute");
 
 
 require("dotenv").config();
@@ -18,6 +19,7 @@ dbConnect();
 
 app.use('/api/auth', authRoutes);
 app.use('/api/blog',blogRoutes);
+app.use('/api/admin',adminRoutes)
 
 app.get("/", (req, res) => {
   res.send("API is running...");

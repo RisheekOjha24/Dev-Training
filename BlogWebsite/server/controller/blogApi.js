@@ -66,15 +66,7 @@ const allBlogs = async (req, res) => {
 const blogById = async (req, res) => {
 
   try {
-    const { blogId, email } = req.body; // Extract id and email from the request body
- 
-       const user = await User.findOne({ email });
-
-       if (!user) {
-         return res.status(400).json({ msg: "User does not exist" });
-       }
-
-    // Find the blog document by ID
+    const { blogId } = req.body;
     const blog = await Blog.findById(blogId);
 
     if (!blog) {

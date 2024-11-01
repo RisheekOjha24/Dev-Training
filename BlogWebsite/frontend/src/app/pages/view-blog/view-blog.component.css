@@ -13,7 +13,8 @@ p{
 
 .card-title {
   font-weight: bolder;
-  font-family: Helvetica, sans-serif;
+  font-family:'Syne', Helvetica, sans-serif;
+  font-size: 42px;
 }
 
 .media {

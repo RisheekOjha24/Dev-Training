@@ -40,7 +40,7 @@ export class LoginComponent {
   }
 
   //method receving the reponse of Login API Call
-  login(credentials: { email: string; password: string,isAdmin:boolean }): void {
+  login(credentials: { email: string; password: string}): void {
     this.authService.login(credentials).subscribe({
       next: (response) => {
         console.log('Login successful:', response);
@@ -49,14 +49,15 @@ export class LoginComponent {
         const user = {
           name: response.name,
           email: credentials.email,
-          isAdmin: response.isAdmin
+          isAdmin: response.isAdmin,
+          isSuspended:response.isSuspended
         };
 
-        localStorage.setItem('user', JSON.stringify(user));
-
         // emitting the username by passing into a function
-        this.authService.setCurrentUser({username:user.name,email:user.email,isAdmin:user.isAdmin});
+        this.authService.setCurrentUser({username:user.name,email:user.email,isAdmin:user.isAdmin,isSuspended:user.isSuspended});
 
+        localStorage.setItem('user', JSON.stringify(user));
+        
         this.router.navigate(['/home']);
       },
       error: (error) => {

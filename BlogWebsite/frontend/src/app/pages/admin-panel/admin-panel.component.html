@@ -1,1 +1,13 @@
-<p>admin-panel works!</p>
+<h1 style="font-family: Syne,sans-serif;">Admin Panel</h1>
+<button class="btn" (click)="showUserPage()" 
+[ngClass]="userComponentActive?'active':'inactive'">User Management</button>
+<button class="btn" (click)="userComponentActive=false"
+[ngClass]="!userComponentActive?'active':'inactive'"
+>Blog Management</button>
+
+@if(userComponentActive){
+    <app-user-management></app-user-management>
+}
+@else {
+    <app-blog-management></app-blog-management>
+}

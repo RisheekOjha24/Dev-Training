@@ -19,3 +19,9 @@ label{
 h4 {
   margin-bottom: 20px; 
 }
+
+.preview{
+  font-family:'Montserrat';
+  font-weight: 600;
+  font-size: 18px;
+}
