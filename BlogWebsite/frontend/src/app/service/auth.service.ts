@@ -6,14 +6,35 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadUserFromStorage();
+  }
+
+  private defaultUser = {
+    username: '',
+    email: '',
+    isAdmin: false,
+    isSuspended: false,
+    unreadCount: 0,
+  };
+
+  currentUser = new BehaviorSubject<{
+    username: string;
+    email: string;
+    isAdmin: boolean;
+    isSuspended: boolean;
+    unreadCount: number;
+  }>(this.defaultUser);
+
+  loadUserFromStorage(): void {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      this.currentUser.next(user);
+    }
+  }
 
   private baseUrl = 'http://localhost:5000/api/auth';
-
-
-  currentUser = new BehaviorSubject<{ username: string; email: string,isAdmin:boolean,isSuspended:boolean }>(
-    {"username": "", "email": "",isAdmin:false,isSuspended:false}
-  );
 
   register(user: {
     name: string;
@@ -27,6 +48,19 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, credentials);
   }
+  getNotificationByEmail(userEmail: string): Observable<any> {
+    const encodedEmail = encodeURIComponent(userEmail);
+    return this.http.get<any>(
+      `${this.baseUrl}/notifications?email=${encodedEmail}`
+    );
+  }
+
+  sendReadByEmail(userEmail: string): Observable<any> {
+    const encodedEmail = encodeURIComponent(userEmail);
+    return this.http.get<any>(
+      `${this.baseUrl}/notificationsRead?email=${encodedEmail}`
+    );
+  }
 
   //Method for emiting values
 
@@ -34,14 +68,22 @@ export class AuthService {
     username,
     email,
     isAdmin,
-    isSuspended
+    isSuspended,
+    unreadCount,
   }: {
     username: string;
     email: string;
-    isAdmin:boolean;
-    isSuspended:boolean
+    isAdmin: boolean;
+    isSuspended: boolean;
+    unreadCount: number;
   }): void {
     // Emit the new user object
-    this.currentUser.next({ username, email,isAdmin,isSuspended });
+    this.currentUser.next({
+      username,
+      email,
+      isAdmin,
+      isSuspended,
+      unreadCount,
+    });
   }
 }

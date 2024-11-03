@@ -49,4 +49,38 @@ const suspendUser = async (req, res) => {
   }
 };
 
-module.exports={getAllUsers,suspendUser}
+const notifyUser = async (req, res) => {
+  try {
+    const { id, msg } = req.body;
+
+    // Find the user by ID
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // we are seeting the limit of sending of storiung notification to 10
+     if (user.notifications.length >= 10) {
+    //  Removing the oldest notification
+       user.notifications.shift();
+     }
+
+    user.notifications.push({
+      message: msg,
+      date: new Date(),
+      read: false,
+    });
+
+    await user.save();
+
+    return res.status(200).json({ message: "Notification sent successfully" });
+    
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while notifying the user" });
+  }
+};
+
+module.exports = { getAllUsers, suspendUser, notifyUser };

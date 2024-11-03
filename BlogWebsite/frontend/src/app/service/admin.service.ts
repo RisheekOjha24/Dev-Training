@@ -17,4 +17,8 @@ export class AdminService {
   suspendUser(id: string): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/suspend`, {id});
   }
+
+  notification(id:string,msg:string):Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/notify`, {id,msg});
+  }
 }

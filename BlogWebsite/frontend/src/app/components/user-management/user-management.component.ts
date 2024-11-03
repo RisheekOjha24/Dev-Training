@@ -3,6 +3,8 @@ import { AdminService } from './../../service/admin.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { swalAlert } from '../swalAlert';
+import { swalMessage } from '../swalMessage';
+import { swalNotify } from '../swalNotify';
 
 @Component({
   selector: 'app-user-management',
@@ -63,7 +65,19 @@ export class UserManagementComponent implements OnInit {
     }
   }
 
-  sendMessage(userId: string): void {
-    // Implement message sending logic
+  async sendMessage(userId: string): Promise<void> {
+    const { value: msg, isConfirmed } = await swalMessage();
+    console.log(msg);
+    if (isConfirmed && msg) {
+      this.adminService.notification(userId, msg.message).subscribe({
+        next: () => {
+          swalNotify("success","Message sent successfully");
+        },
+        error: (error) => {
+          console.error('Error sending message:', error);
+          swalNotify('error', 'Failed to send the message');
+        },
+      });
+    }
   }
 }

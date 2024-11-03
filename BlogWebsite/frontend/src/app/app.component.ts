@@ -1,7 +1,7 @@
 import { routes } from './app.routes';
 import { AuthService } from './service/auth.service';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { swalAlert } from './components/swalAlert';
 
@@ -13,41 +13,37 @@ import { swalAlert } from './components/swalAlert';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'blogWebsite';
   userName: string | null = null;
   email: string | null = null;
-  isAdmin: boolean|null= null;
-  isSuspended:boolean|null=null;
+  isAdmin: boolean | null = null;
+  isSuspended: boolean | null = null;
   private router = inject(Router);
   private authService = inject(AuthService);
   isSidebarCollapsed = false;
+  badgeCount: number = 0;
 
   isLoginOrRegisterPage(): boolean {
     return this.router.url === '/login' || this.router.url === '/register';
   }
 
   ngOnInit(): void {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const userObj = JSON.parse(user);
-      this.userName = userObj.name;
-      this.email = userObj.email;
-      this.isAdmin = userObj.isAdmin;
-      this.isSuspended = userObj.isSuspended;
-
-    } else {
-      this.authService.currentUser.subscribe((activeUser) => {
-        this.userName = activeUser?.username ;
-        this.email = activeUser?.email;
-        this.isAdmin = activeUser?.isAdmin;
-        this.isSuspended = activeUser.isSuspended;
-      });
-    }
+    this.authService.currentUser.subscribe((activeUser) => {
+      this.userName = activeUser?.username;
+      this.email = activeUser?.email;
+      this.isAdmin = activeUser?.isAdmin;
+      this.isSuspended = activeUser.isSuspended;
+      this.badgeCount = activeUser.unreadCount;
+    });
   }
 
-  signIn():void{
-    this.router.navigateByUrl('/login')
+  setBadgeCount():void{
+    this.badgeCount=0;
+  };
+
+  signIn(): void {
+    this.router.navigateByUrl('/login');
   }
   async logout(): Promise<void> {
     const result = await swalAlert(
@@ -57,9 +53,15 @@ export class AppComponent implements OnInit{
     );
 
     if (result.isConfirmed) {
-      this.authService.setCurrentUser({username:"",email:"",isAdmin:false,isSuspended:false})
+      this.authService.setCurrentUser({
+        username: '',
+        email: '',
+        isAdmin: false,
+        isSuspended: false,
+        unreadCount: 0,
+      });
       localStorage.clear();
-       window.location.href = '/login';
+      window.location.href = '/login';
     }
   }
 }

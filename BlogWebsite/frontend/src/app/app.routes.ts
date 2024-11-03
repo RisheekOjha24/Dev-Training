@@ -8,11 +8,12 @@ import { CreateBlogComponent } from './pages/create-blog/create-blog.component';
 import { ViewBlogComponent } from './pages/view-blog/view-blog.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { SuspendUserComponent } from './pages/suspend-user/suspend-user.component';
+import { NotificationComponent } from './pages/notification/notification.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/home',
     pathMatch: 'full',
   },
   { path: 'home', component: HomeComponent, pathMatch: 'full' },
@@ -50,5 +51,10 @@ export const routes: Routes = [
     path: 'suspended',
     component: SuspendUserComponent,
     pathMatch: 'full',
+  },
+  {
+    path:'notify',
+    component:NotificationComponent,
+    pathMatch:'full'
   }
 ];

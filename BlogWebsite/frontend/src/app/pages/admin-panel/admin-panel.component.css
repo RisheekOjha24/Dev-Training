@@ -1,5 +1,6 @@
 .active{
-    background-color: rgb(29, 224, 215) !important;
+    background-color:#002D62 !important;
+    color: white;
     border-radius: 0;
     border: 1px solid black;
 }

@@ -45,17 +45,17 @@ export class LoginComponent {
       next: (response) => {
         console.log('Login successful:', response);
 
-        // Store user info in localStorage
+        // Storing user info in localStorage
         const user = {
-          name: response.name,
+          username: response.name,
           email: credentials.email,
           isAdmin: response.isAdmin,
-          isSuspended:response.isSuspended
+          isSuspended:response.isSuspended,
+          unreadCount:response.unreadCount
         };
 
         // emitting the username by passing into a function
-        this.authService.setCurrentUser({username:user.name,email:user.email,isAdmin:user.isAdmin,isSuspended:user.isSuspended});
-
+        this.authService.setCurrentUser(user);
         localStorage.setItem('user', JSON.stringify(user));
         
         if(user.isSuspended)this.router.navigate(['/suspended']);

@@ -18,7 +18,4 @@ export class AdminPanelComponent {
   showUserPage():void{
     if(!this.userComponentActive)this.userComponentActive = true;    
   }
-
-  
-
 }
