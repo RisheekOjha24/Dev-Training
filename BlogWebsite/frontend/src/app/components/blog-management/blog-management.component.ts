@@ -3,6 +3,8 @@ import { BlogService } from '../../service/blog.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { swalAlert } from '../swalAlert';
+import { swalNotify } from '../swalNotify';
 
 @Component({
   selector: 'app-blog-management',
@@ -65,11 +67,27 @@ export class BlogManagementComponent implements OnInit {
     }
   }
 
-  approveBlog(blogId: string): void {
-    // Approve blog logic
+  async approveBlog(blog:any):Promise<any> {
+    const response= await swalAlert("question","Sure you want to Approve ?","Blog will be pulished after approval");
+    if(!response.isConfirmed)return;
+    swalNotify('success',"Blog has been approved");
+    this.blogService.setBlogApprovalById(blog._id).subscribe();
+    blog.approved = true;
+  }
+
+  async rejectBlog(blog:any):Promise<any>{
+    const response = await swalAlert(
+      'question',
+      'Sure you want to Reject ?',
+      'Blog will be removed after rejection'
+    );
+    if (!response.isConfirmed) return;
+    swalNotify('success', 'Blog has been rejected');
+    this.blogService.setBlogApprovalById(blog._id).subscribe();
+    blog.approved = false;
   }
 
   viewBlog(blogId: string): void {
-    this.router.navigate([`/viewBlog/${blogId}`]);
+    this.router.navigate([`/viewBlog/${blogId}`]); 
   }
 }

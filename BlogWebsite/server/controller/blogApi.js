@@ -124,4 +124,33 @@ const myBlog = async (req, res) => {
   }
 };
 
-module.exports={newBlog,allBlogs,blogById,addComment,myBlog};
+
+const setBlogApprovalById = async (req, res) => {
+   try {
+     const { blogId } = req.body;
+
+     const blog = await Blog.findById(blogId);
+     if (!blog) {
+       return res.status(404).json({ message: "Blog not found" });
+     }
+
+     blog.approved = !blog.approved;
+
+     await blog.save();
+     return res.status(200).json({
+       message: "Blog approval status updated successfully",
+     });
+   } catch (error) {
+     console.error(error);
+     return res.status(500).json({ message: "Internal server error" });
+   }
+}
+
+module.exports = {
+  newBlog,
+  allBlogs,
+  blogById,
+  addComment,
+  myBlog,
+  setBlogApprovalById,
+};

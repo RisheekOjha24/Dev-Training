@@ -57,14 +57,14 @@
         @if(!blog.approved){
           <button
             class="casual-btn btn-approve"
-            (click)="approveBlog(blog._id)" 
+            (click)="approveBlog(blog)" 
           >
             Approve
           </button>
         }@else {
          <button
             class="casual-btn btn-reject"
-            (click)="approveBlog(blog._id)" 
+            (click)="rejectBlog(blog)" 
           >
             Reject
           </button>

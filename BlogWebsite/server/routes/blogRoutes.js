@@ -2,7 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Blog = require('../model/blogSchema');
 const User = require("../model/userSchema");
-const {newBlog,allBlogs,blogById,addComment,myBlog} = require("../controller/blogApi");
+const {
+  newBlog,
+  allBlogs,
+  blogById,
+  addComment,
+  myBlog,
+  setBlogApprovalById,
+} = require("../controller/blogApi");
 const upload = require("../middleware/multer.middleware");
 
 //  /api/blog is home url
@@ -16,5 +23,7 @@ router.post('/viewBlogs', blogById);
 router.post('/blogs/:id/comments', addComment);
 
 router.post('/myBlogs',myBlog)
+
+router.post("/setBlogApproval", setBlogApprovalById);
 
 module.exports = router;
