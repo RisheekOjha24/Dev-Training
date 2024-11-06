@@ -1,4 +1,3 @@
-import { routes } from './app.routes';
 import { AuthService } from './service/auth.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';

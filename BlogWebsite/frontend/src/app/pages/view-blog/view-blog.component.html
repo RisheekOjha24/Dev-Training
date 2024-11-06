@@ -1,8 +1,8 @@
 <div class="container my-5 d-flex justify-content-center">
 
-  <div *ngIf="blog; else loading"  style="width: 800px;">
+  <div  *ngIf="blog; else loading"  style="width: 800px;">
 
-      <h5 class="card-title  d-flex justify-content-center ">{{blog.title }}</h5>   
+      <h5 class="card-title text-center">{{blog.title }}</h5>   
 
     <div class="d-flex justify-content-between align-items-center">
         <img
@@ -10,7 +10,7 @@
             [src]="blog.imageUrl"
             alt="Blog Image"
             class="img-fluid"
-            style="max-height:900px;width:60%; object-fit: cover;" 
+            style="max-height:900px;width:80%; object-fit: cover;" 
         />
     </div>
       <p [innerHTML]="blog.content" ></p>

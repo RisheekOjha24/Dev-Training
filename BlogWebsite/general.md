@@ -105,3 +105,10 @@ etc.
 
 ## Finally in Component HTML file
  <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" />
+
+# Guards in Angular
+
+1. CanActivate: Restricts access to a route.
+2. CanActivateChild: Restricts access to child routes of a given route.
+3. CanDeactivate: Checks if you can leave the route.
+4. CanMatch: Customizes the route-matching process

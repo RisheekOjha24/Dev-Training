@@ -21,6 +21,13 @@ export class HomeComponent implements OnInit {
   private router = inject(Router);
 
   ngOnInit(): void {
+    const user= localStorage.getItem('user');
+    if(user)
+    {
+     const userData=JSON.parse(user);
+     if(userData.isSuspended)
+      this.router.navigateByUrl('/suspended');
+    }
     this.fetchBlogs();
   }
 

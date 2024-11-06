@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BlogService } from '../../service/blog.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Blog } from '../../model/blog.model';
 import { AuthService } from '../../service/auth.service';
@@ -16,6 +16,7 @@ export class ViewBlogComponent implements OnInit {
   blogService = inject(BlogService);
   route = inject(ActivatedRoute);
   private authService = inject(AuthService);
+  router=inject(Router);
 
   blog: Blog | null = null;
   errorMessage: string = '';
@@ -24,10 +25,7 @@ export class ViewBlogComponent implements OnInit {
 
   ngOnInit() {
     const blogId = this.route.snapshot.paramMap.get('id')||"";
-
-    // if (blogId && this.email) {
-      this.fetchBlog(blogId );
-    // }
+    this.fetchBlog(blogId );
   }
 
   fetchBlog(blogId: string) {
@@ -37,6 +35,7 @@ export class ViewBlogComponent implements OnInit {
       },
       error: (err) => {
         this.errorMessage = err.error?.msg || 'Error loading blog';
+        this.router.navigateByUrl('/home');
         console.log(this.errorMessage);
       },
     });

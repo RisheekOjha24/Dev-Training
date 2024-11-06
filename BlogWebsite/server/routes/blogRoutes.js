@@ -9,6 +9,7 @@ const {
   addComment,
   myBlog,
   setBlogApprovalById,
+  deleteBlogById,
 } = require("../controller/blogApi");
 const upload = require("../middleware/multer.middleware");
 
@@ -25,5 +26,7 @@ router.post('/blogs/:id/comments', addComment);
 router.post('/myBlogs',myBlog)
 
 router.post("/setBlogApproval", setBlogApprovalById);
+
+router.delete("/deleteBlog/:blogId",deleteBlogById)
 
 module.exports = router;

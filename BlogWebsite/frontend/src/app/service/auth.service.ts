@@ -34,7 +34,7 @@ export class AuthService {
     }
   }
 
-  private baseUrl = 'http://localhost:5000/api/auth';
+  private baseUrl = 'http://localhost:4500/api/auth';
 
   register(user: {
     name: string;

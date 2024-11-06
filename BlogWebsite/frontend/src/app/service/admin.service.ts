@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AdminService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl = 'http://localhost:5000/api/admin';
+  private baseUrl = 'http://localhost:4500/api/admin';
 
   getAllUsers(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/allUsers`);

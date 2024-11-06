@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 
 import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
+import { swalAlert } from '../../components/swalAlert';
+import { swalNotify } from '../../components/swalNotify';
 
 @Component({
   selector: 'app-myblogs',
@@ -39,8 +41,14 @@ export class MyblogsComponent implements OnInit {
       this.email = userObj.email;
     }
     
-    if (this.email) {
-      this.blogService.getBlogsByEmail(this.email).subscribe({
+    if(this.email!=null)
+    this.fetchBlogsbyEmail(this.email);
+  }
+
+  fetchBlogsbyEmail(email:string):void{
+       
+    if (email) {
+      this.blogService.getBlogsByEmail(email).subscribe({
         next: (data) => {
           this.blogs = data;
           this.filteredBlogs = data;
@@ -52,8 +60,38 @@ export class MyblogsComponent implements OnInit {
       });
     }
   }
+
+  // Buttons View, Edit, Delete
+
   navigateToView(blogId: string): void {
     this.router.navigateByUrl(`/viewBlog/${blogId}`);
+  }
+
+  navigateToEdit(blogId:string):void{
+      this.router.navigateByUrl(`/editBlog/${blogId}`);
+  }
+
+  async navigateToDelete(blogId:string):Promise<void>{
+
+    const response= await swalAlert('question',"Do you want to delete this blog ?","Click Ok to Proceed");
+    
+    if(!response.isConfirmed)return;
+
+    this.blogService.deleteBlogById(blogId).subscribe({
+      next:(res)=>{
+        swalNotify("success",res.msg);
+            this.blogs=this.blogs.filter((item)=>(blogId !== item._id));
+            this.filteredBlogs=this.blogs;
+      },
+      error:(err)=>{
+        console.log(err);
+        swalNotify("error","Some error occured");
+      }
+    })
+
+
+    // if(this.email!=null)
+    // this.fetchBlogsbyEmail(this.email);
   }
 
   //sorting and filtering code
@@ -82,4 +120,6 @@ export class MyblogsComponent implements OnInit {
   animationCreated(animationItem: AnimationItem): void {
      animationItem.setSpeed(2);
   }
+
+
 }

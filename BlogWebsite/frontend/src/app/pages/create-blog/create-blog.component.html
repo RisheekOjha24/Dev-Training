@@ -35,11 +35,11 @@
         <p class="preview">Preview:</p>
         <div class="w-100 d-flex justify-content-center align-items-center">
           <img [src]="imageUrl" alt="Uploaded Image" class="img-thumbnail" style="min-height:250px; max-width: 100%; object-fit: cover;" />
-
         </div>
+        <button type="button" class="btn btn-danger ms-2" (click)="removeImage()">Remove</button>
       </div>
     </div>
-
+    
     <!-- Text Editor for Content -->
     <div class="mb-3">
       <label for="content" class="form-label">Blog Content</label>

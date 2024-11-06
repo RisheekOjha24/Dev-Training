@@ -8,7 +8,7 @@ import { Observable, Observer } from 'rxjs';
 export class BlogService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl = 'http://localhost:5000/api/blog';
+  private baseUrl = 'http://localhost:4500/api/blog';
 
   getAllBlogs(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/allBlogs`);
@@ -24,5 +24,14 @@ export class BlogService {
 
   setBlogApprovalById(blogId: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/setBlogApproval`, { blogId });
+  }
+
+  // Send the formData to the backend
+  createNewBlog(formData:FormData):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/newblog`, formData);
+  }
+
+  deleteBlogById(blogId:string):Observable<any>{
+    return this.http.delete<void>(`${this.baseUrl}/deleteBlog/${blogId}`);
   }
 }

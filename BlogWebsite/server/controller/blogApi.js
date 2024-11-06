@@ -3,40 +3,59 @@ const Blog=require("../model/blogSchema");
 const cloudinary=require("../utils/cloudinary");
 
 const newBlog = async (req, res) => {
-
-  const { title, content, email } = req.body;
+  const { blogId, title, content, email } = req.body;
 
   try {
+    // Find the user by email
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(400).json({ msg: "User does not exist" });
     }
 
     let imageUrl = null;
 
-    // Check if a file was uploaded
+    // Check if a file was uploaded and upload it to Cloudinary
     if (req.file) {
-      // Upload the image to Cloudinary
       const uploadResult = await cloudinary.uploader.upload(req.file.path);
-      imageUrl = uploadResult.secure_url; // Get the secure URL for the uploaded image
+      imageUrl = uploadResult.secure_url;
     }
 
-    const newBlog = new Blog({
-      title,
-      content,
-      authorId: user._id, // Updated to match your schema
-      authorName: user.name,
-      imageUrl, // Set imageUrl if available
-    });
+    if (blogId) {
+      // If blogId is provided, update the existing blog
+      const existingBlog = await Blog.findById(blogId);
+      if (!existingBlog) {
+        return res.status(404).json({ msg: "Blog not found" });
+      }
 
-    const savedBlog = await newBlog.save();
+      // Update the blog fields
+      existingBlog.title = title || existingBlog.title;
+      existingBlog.content = content || existingBlog.content;
+      existingBlog.imageUrl = imageUrl || existingBlog.imageUrl;
+      existingBlog.approved = false;
 
-    res.status(201).json(savedBlog);
+      // Save the updated blog
+      const updatedBlog = await existingBlog.save();
+      return res.status(200).json(updatedBlog);
+
+    } else {
+      // If no blogId, create a new blog
+      const newBlog = new Blog({
+        title,
+        content,
+        authorId: user._id,
+        authorName: user.name,
+        imageUrl,
+      });
+
+      const savedBlog = await newBlog.save();
+      return res.status(201).json(savedBlog);
+    }
   } catch (err) {
+    console.error(err);
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 };
+
 
 const allBlogs = async (req, res) => {
   try {
@@ -146,6 +165,24 @@ const setBlogApprovalById = async (req, res) => {
    }
 }
 
+const deleteBlogById = async(req,res)=>{
+  try {
+    const {blogId} = req.params;
+    
+    const blog = await Blog.findById(blogId);
+    
+    if(!blog) return res.status(404).json({ message: "Blog not found" });
+
+    await Blog.findByIdAndDelete(blogId);
+
+    res.json({msg:"Blog deleted successfully"});
+
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   newBlog,
   allBlogs,
@@ -153,4 +190,5 @@ module.exports = {
   addComment,
   myBlog,
   setBlogApprovalById,
+  deleteBlogById 
 };
