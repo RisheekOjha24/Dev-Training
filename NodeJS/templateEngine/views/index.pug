@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title Home
+  body
+    h1(style="color:orange") Welcome to the Login and Signup Page
+    h2 This login page is created using Pug engine
+    if isAdmin
+      p Yes, he is admin
+      p Welcome #{username}
+   
+    else 
+      p No, he is not admin
+      p Now, don’t ask for it again.
+
+    a(href="/login") Login 
+    a(href="/signup") SignUp 

@@ -5,7 +5,6 @@ const getAllUsers = async (req, res) => {
   try {
     
     const users = await User.find({}, { notifications: 0 }); 
-
     res.json(users)
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -83,4 +82,33 @@ const notifyUser = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, suspendUser, notifyUser };
+const makeOrRemoveUserAdmin = async (req, res) => {
+  try {
+    const { superAdminUser, user } = req.body;
+
+    const superAdmin = await User.findOne({ email: superAdminUser });
+    if (!superAdmin || !superAdmin.isSuperAdmin) {
+      return res.status(403).json({ message: "Only super admins can perform this action." });
+    }
+
+    const targetUser = await User.findOne({ email: user });
+    if (!targetUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Toggle the isAdmin status
+    targetUser.isAdmin = !targetUser.isAdmin;
+    await targetUser.save();
+
+    res.json({
+      message: `User ${targetUser.isAdmin ? "promoted to" : "demoted from"} admin successfully.`,
+      user: targetUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred while updating user admin status." });
+  }
+};
+
+
+module.exports = { getAllUsers, suspendUser, notifyUser, makeOrRemoveUserAdmin};

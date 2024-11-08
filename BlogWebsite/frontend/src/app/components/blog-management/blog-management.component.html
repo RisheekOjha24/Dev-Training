@@ -23,7 +23,6 @@
       (change)="onSortChange()"
       style="max-width: 180px;"
     >
-    <option value="">Sort Item</option>
     <option value="recent">Latest</option>
     <option value="approved">Approved</option>
       <option value="pending">Pending Approval</option>
@@ -69,6 +68,12 @@
             Reject
           </button>
         }
+        <button
+            class="casual-btn delete-btn"
+            (click)="deleteBlog(blog._id)"
+          >
+          Delete
+        </button>
         </td>
       </tr>
       <tr *ngIf="filteredBlogs.length === 0">

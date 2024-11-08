@@ -1,4 +1,18 @@
 
+JavaScript ES6 Features
+1.  Arrow Functions
+2.  Template Literals
+3.  Let and Const
+4.  Default Parameters
+5.  Destructuring
+6.  Rest and Spread Operators
+7.  Classes
+8.  Modules (import/export)
+9.  Promises
+10. Enhanced Object Literals
+11. Map and Set
+12. Symbol
+
 JavaScript ES7, also known as ECMAScript 2016, introduced a handful of new features aimed at making coding more efficient and readable. Here's a quick overview:
 
 1. Async/await for simpler asynchronous code

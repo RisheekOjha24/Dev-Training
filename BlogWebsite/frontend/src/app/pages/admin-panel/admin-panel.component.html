@@ -1,4 +1,5 @@
-<h1 style="font-family: Syne,sans-serif;">Admin Panel</h1>
+
+<h1 style="font-family: Syne,sans-serif;">{{isSuperAdmin?'Super Admin Panel':'Admin Panel'}}</h1>
 <button class="btn" (click)="showUserPage()" 
 [ngClass]="userComponentActive?'active':'inactive'">User Management</button>
 <button class="btn" (click)="userComponentActive=false"

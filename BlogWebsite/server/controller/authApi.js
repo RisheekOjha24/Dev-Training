@@ -35,6 +35,7 @@ const login = async (req, res) => {
         email: user.email,
         isAdmin:user.isAdmin,
         isSuspended:user.isSuspended,
+        isSuperAdmin:user.isSuperAdmin,
         unreadCount:unreadCount
     });
   } catch (err) {

@@ -6,10 +6,13 @@ const {
   newBlog,
   allBlogs,
   blogById,
-  addComment,
   myBlog,
   setBlogApprovalById,
   deleteBlogById,
+  getBlogInfo,
+  sendLikeToBlog,
+  sendComment,
+  delComment
 } = require("../controller/blogApi");
 const upload = require("../middleware/multer.middleware");
 
@@ -21,12 +24,18 @@ router.get('/allBlogs', allBlogs);
 
 router.post('/viewBlogs', blogById);
 
-router.post('/blogs/:id/comments', addComment);
-
 router.post('/myBlogs',myBlog)
 
 router.post("/setBlogApproval", setBlogApprovalById);
 
-router.delete("/deleteBlog/:blogId",deleteBlogById)
+router.delete("/deleteBlog/:blogId",deleteBlogById);
+
+router.post("/getBlogInfo", getBlogInfo);
+
+router.post("/sendLikesToBlog",sendLikeToBlog);
+
+router.post("/sendComment", sendComment);
+
+router.post("/deleteComment",delComment)
 
 module.exports = router;

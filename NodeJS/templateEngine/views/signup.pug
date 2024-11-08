@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title Signup Page
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
+  body
+    .container
+      .row.justify-content-center
+        .col-md-6
+          h2.text-center Signup
+          form(action="/signup" method="POST")
+            .form-group
+              label(for="username") Username:
+              input(type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required)
+            .form-group
+              label(for="password") Password:
+              input(type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required)
+            .form-group
+              label(for="confirmPassword") Confirm Password:
+              input(type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required)
+            button(type="submit" class="btn btn-success btn-block") Sign Up
+            br
+            a(href="/login") Already have an account? Login here!

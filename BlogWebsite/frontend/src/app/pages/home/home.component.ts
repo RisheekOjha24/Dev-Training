@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   blogs: any[] = [];
   filteredBlogs: any[] = []; // Array for filtered blogs
   searchTerm: string = ''; // Search term for filtering
-  sortBy: string = 'sortItem'; // Sorting criteria
+  sortBy: string = 'recent'; // Sorting criteria
   private router = inject(Router);
 
   ngOnInit(): void {
@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         this.blogs = data.filter((blog)=>blog.approved===true);
         this.filteredBlogs = this.blogs; // Initialize filtered blogs
+        this.sortBlogs();
       },
       error: (error) => {
         console.error('Error fetching blogs:', error);
@@ -53,15 +54,16 @@ export class HomeComponent implements OnInit {
   }
 
   sortBlogs(): void {
-    if (this.sortBy === 'recent') {
-      this.filteredBlogs.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-    } else {
+  if (this.sortBy === 'oldest'){
       this.filteredBlogs.sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+    }
+    else {
+      this.filteredBlogs.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
     }
   }

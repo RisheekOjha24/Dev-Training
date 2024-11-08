@@ -11,7 +11,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   if(user){
 
     const userData = JSON.parse(user);
-    if(userData.isAdmin){
+    if(userData.isAdmin || userData.isSuperAdmin){
         return true;
     }
     swalNotify("warning","You Don't have Access to this page")

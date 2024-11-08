@@ -19,7 +19,7 @@ export class BlogManagementComponent implements OnInit {
   blogs: any[] = [];
   filteredBlogs: any[] = [];
   searchTerm: string = '';
-  selectedSortOption: string = '';
+  selectedSortOption: string = 'recent';
 
   ngOnInit(): void {
     this.fetchBlogs();
@@ -71,8 +71,9 @@ export class BlogManagementComponent implements OnInit {
     const response= await swalAlert("question","Sure you want to Approve ?","Blog will be pulished after approval");
     if(!response.isConfirmed)return;
     swalNotify('success',"Blog has been approved");
-    this.blogService.setBlogApprovalById(blog._id).subscribe();
     blog.approved = true;
+    this.blogService.setBlogApprovalById(blog._id).subscribe();
+    this.applyFiltersAndSorting();
   }
 
   async rejectBlog(blog:any):Promise<any>{
@@ -82,12 +83,33 @@ export class BlogManagementComponent implements OnInit {
       'Blog will be removed after rejection'
     );
     if (!response.isConfirmed) return;
+    blog.approved = false;
+    this.applyFiltersAndSorting();
     swalNotify('success', 'Blog has been rejected');
     this.blogService.setBlogApprovalById(blog._id).subscribe();
-    blog.approved = false;
   }
 
   viewBlog(blogId: string): void {
     this.router.navigate([`/viewBlog/${blogId}`]); 
+  }
+
+  async deleteBlog(blogId:string):Promise<void>{
+
+    const response= await swalAlert('question',"Do you want to delete this blog ?","Click Ok to Proceed");
+    
+    if(!response.isConfirmed)return;
+
+    this.blogService.deleteBlogById(blogId).subscribe({
+      next:(res)=>{
+        swalNotify("success",res.msg);
+            this.blogs=this.blogs.filter((item)=>(blogId !== item._id));
+            this.applyFiltersAndSorting();
+      },
+      error:(err)=>{
+        console.log(err);
+        swalNotify("error","Some error occured");
+      }
+    })
+
   }
 }

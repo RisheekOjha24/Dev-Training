@@ -7,9 +7,8 @@
       (input)="filterBlogs()"
     />
     <select aria-label="label for the select" [(ngModel)]="sortBy" (change)="sortBlogs()" >
-      <option value="sortItem">Sort Item</option>
-      <option value="oldest">Sort by Oldest</option>
       <option value="recent">Sort by Recent</option>
+      <option value="oldest">Sort by Oldest</option>
     </select>
   </div>
 
@@ -20,6 +19,8 @@
       (click)="navigateToBlog(blog._id)"
     >
       <h3 style="font-family: Syne, sans-serif ;">{{ blog.title }}</h3>
+
+      
       <p><strong>Author:</strong> {{ blog.authorName }}</p>
       <p><small>Published on: {{ blog.createdAt | date: 'MMM d, y, h:MM a' }}</small></p>
     </div>

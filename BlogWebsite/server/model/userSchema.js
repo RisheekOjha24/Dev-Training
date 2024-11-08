@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   isSuspended: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
+  isSuperAdmin: { type: Boolean, default: false },
   notifications: [
     {
       message: { type: String, required: true },

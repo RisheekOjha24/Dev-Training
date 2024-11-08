@@ -17,17 +17,22 @@
   
 }
 .goActive{
-    background-color:rgb(32, 167, 32) ;
+    background-color:rgb(10, 139, 120) ;
     margin:0 1rem;
 }
 .btn-msg{
     background-color: #c2ddcb;
     margin:0 1rem;
 }
-
+.btn-make-admin{
+    margin:0 1rem;
+}
 .casual-btn:active{
     transform: scale(0.94);
 }
 .syne{
-    font-family: 'Syne',sans-serif;
+    font-family:Cambria, Cochin, Georgia;
+}
+table{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

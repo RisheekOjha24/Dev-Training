@@ -5,6 +5,7 @@ const {
   getAllUsers,
   suspendUser,
   notifyUser,
+  makeOrRemoveUserAdmin
 } = require("../controller/adminApi");
 
 //  /api/admin
@@ -15,5 +16,7 @@ router.get('/allUsers',getAllUsers);
 router.put('/suspend',suspendUser);
 
 router.post('/notify',notifyUser);
+
+router.post('/makeorRevokeAdmin', makeOrRemoveUserAdmin)
 
 module.exports=router;

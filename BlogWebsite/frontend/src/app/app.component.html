@@ -14,8 +14,10 @@
           <li class="nav-item mb-2">
               <a class="nav-link" routerLink="/my-blogs" routerLinkActive="active-link" *ngIf="!isSuspended">My Blogs</a>
           </li>
-           <li class="nav-item mb-2" *ngIf="isAdmin">
-              <a class="nav-link" routerLink="/adminPanel" routerLinkActive="active-link">Admin</a>
+           <li class="nav-item mb-2" *ngIf="isAdmin || isSuperAdmin">
+              <a class="nav-link" routerLink="/adminPanel" routerLinkActive="active-link">
+                {{isAdmin?'Admin':'Super Admin'}}
+              </a>
           </li>
 
           <li class="nav-item mb-2" *ngIf="userName">

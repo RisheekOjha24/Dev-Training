@@ -112,3 +112,6 @@ etc.
 2. CanActivateChild: Restricts access to child routes of a given route.
 3. CanDeactivate: Checks if you can leave the route.
 4. CanMatch: Customizes the route-matching process
+
+# The ! tells TypeScript "trust me, this will be defined at runtime", even though it can't guarantee that at compile time. 
+@ViewChild('commentIcon') commentIcon!: ElementRef;

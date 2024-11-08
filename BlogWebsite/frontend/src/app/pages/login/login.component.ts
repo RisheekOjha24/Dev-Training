@@ -21,8 +21,7 @@ export class LoginComponent {
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(6),
+      Validators.required
     ]),
   });
 
@@ -51,7 +50,8 @@ export class LoginComponent {
           email: credentials.email,
           isAdmin: response.isAdmin,
           isSuspended:response.isSuspended,
-          unreadCount:response.unreadCount
+          unreadCount:response.unreadCount,
+          isSuperAdmin:response.isSuperAdmin
         };
 
         // emitting the username by passing into a function

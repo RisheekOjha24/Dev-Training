@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AdminService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl = 'http://localhost:4500/api/admin';
+  private baseUrl = 'http://localhost:4600/api/admin';
 
   getAllUsers(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/allUsers`);
@@ -21,4 +21,9 @@ export class AdminService {
   notification(id:string,msg:string):Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/notify`, {id,msg});
   }
+
+  makeorRevokeAdmin(superAdminUser:string,user:string):Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/makeOrRevokeAdmin`, {superAdminUser, user});
+  }
+
 }

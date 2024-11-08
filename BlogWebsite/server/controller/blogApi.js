@@ -6,7 +6,7 @@ const newBlog = async (req, res) => {
   const { blogId, title, content, email } = req.body;
 
   try {
-    // Find the user by email
+
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ msg: "User does not exist" });
@@ -33,7 +33,6 @@ const newBlog = async (req, res) => {
       existingBlog.imageUrl = imageUrl || existingBlog.imageUrl;
       existingBlog.approved = false;
 
-      // Save the updated blog
       const updatedBlog = await existingBlog.save();
       return res.status(200).json(updatedBlog);
 
@@ -99,22 +98,6 @@ const blogById = async (req, res) => {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 };
-
-const addComment = async (req, res) => {
-    const { userId, content } = req.body;
-    try {
-      const blog = await Blog.findById(req.params.id);
-      if (!blog) {
-        return res.status(404).json({ msg: "Blog not found" });
-      }
-  
-      blog.comments.push({ userId, content });
-      await blog.save();
-      res.status(201).json(blog);
-    } catch (err) {
-      res.status(500).json({ msg: "Server error", error: err.message });
-    }
-  }
 
 
 const myBlog = async (req, res) => {
@@ -183,12 +166,173 @@ const deleteBlogById = async(req,res)=>{
   }
 }
 
+
+const getBlogInfo = async (req, res) => {
+  try {
+    const { blogId } = req.body;
+
+    if (!blogId) {
+      return res.status(400).json({ message: "Blog ID is required" });
+    }
+
+    // Fetching blog by ID, populate both likedBy (user details) and comments (with authorName, content)
+    const blog = await Blog.findById(blogId)
+      .populate('likedBy', 'username email')
+     
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    // Return likes count, users who liked the blog, and the list of comments
+    return res.status(200).json({
+      likesCount: blog.likesCount,
+      likedBy: blog.likedBy, 
+    });
+    
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error fetching likes and comments" });
+  }
+};
+
+const sendLikeToBlog = async (req, res) => {
+  try {
+    const { blogId, email } = req.body;
+
+    if (!blogId || !email) {
+      return res.status(400).json({ message: "Blog ID and email are required" });
+    }
+
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const alreadyLiked = blog.likedBy.includes(user._id);
+
+    if (alreadyLiked) {
+   
+      blog.likedBy.pull(user._id);  // Remove the user ID from likedBy array
+      blog.likesCount -= 1;         // Decrease the likes count
+
+      await blog.save();
+
+      return res.status(200).json({
+        message: "Like removed successfully",
+        likesCount: blog.likesCount,
+      });
+    } else {
+      
+      blog.likedBy.push(user._id);  
+      blog.likesCount += 1;
+
+      // Save the updated blog
+      await blog.save();
+
+      return res.status(200).json({
+        message: "Like added successfully",
+        likesCount: blog.likesCount,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error adding/removing like to blog" });
+  }
+};
+
+
+const sendComment = async (req, res) => {
+  try {
+    const { blogId, content, email } = req.body;
+
+    if (!blogId || !content || !email) {
+      return res.status(400).json({ message: "Blog ID, content, and email are required" });
+    }
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const newComment = {
+      content,
+      // authorId: user._id,
+      authorEmail:user.email,
+      authorName: user.name,
+      createdAt: new Date(),
+    };
+
+    blog.comments.push(newComment);
+    await blog.save();
+
+    return res.status(200).json({
+      message: "Comment added successfully",
+      comments: blog.comments,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error adding comment" });
+  }
+};
+
+const delComment = async (req, res) => {
+  try {
+    const { commentId } = req.body;
+
+    if (!commentId) {
+      return res.status(400).json({ message: "Comment ID is required" });
+    }
+
+    const blog = await Blog.findOne({ 'comments._id': commentId });
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found or comment not found" });
+    }
+
+    // find the index of comment from the comments array
+    const commentIndex = blog.comments.findIndex(comment => comment._id.toString() === commentId);
+
+    if (commentIndex === -1) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    // Remove the comment from the array
+    blog.comments.splice(commentIndex, 1);
+
+    // Save the updated blog document
+    await blog.save();
+
+    // Respond with success
+    return res.status(200).json({ message: "Comment deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "An error occurred while deleting the comment" });
+  }
+};
+
+
 module.exports = {
   newBlog,
   allBlogs,
   blogById,
-  addComment,
   myBlog,
   setBlogApprovalById,
-  deleteBlogById 
+  deleteBlogById,
+  getBlogInfo,
+  sendLikeToBlog,
+  sendComment,
+  delComment
 };

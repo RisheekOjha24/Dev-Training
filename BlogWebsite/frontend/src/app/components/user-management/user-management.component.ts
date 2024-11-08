@@ -1,28 +1,38 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { AdminService } from './../../service/admin.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { swalAlert } from '../swalAlert';
 import { swalMessage } from '../swalMessage';
 import { swalNotify } from '../swalNotify';
+import { AuthService } from '../../service/auth.service';
+import { trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,JsonPipe],
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
   users: any[] = [];
   filteredUsers: any[] = [];
-  regularUsers: any[] = []; // Holds non-admin users
+  regularUsers: any[] = []; // Holds non-admin, non-super-admin users
   adminUsers: any[] = []; // Holds admin users
+  superAdminUsers: any[] = []; // Holds super admin users
   searchTerm: string = '';
+  isCurrSuperAdmin:boolean=false;
+  email:string=""
 
   private adminService = inject(AdminService);
+  private authService = inject(AuthService);
 
   ngOnInit(): void {
+    this.authService.currentUser.subscribe((data)=>{
+      this.isCurrSuperAdmin=!data.isAdmin
+      this.email=data.email;
+    });
     this.fetchUsers();
   }
 
@@ -30,6 +40,7 @@ export class UserManagementComponent implements OnInit {
     this.adminService.getAllUsers().subscribe({
       next: (userArray) => {
         this.users = userArray;
+        console.log(this.users);
         this.filteredUsers = userArray;
         this.updateUserLists(); // Initialize filtered lists
       },
@@ -45,12 +56,13 @@ export class UserManagementComponent implements OnInit {
         user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    this.updateUserLists(); // Update regular and admin lists
+    this.updateUserLists(); // Update categorized lists
   }
 
   updateUserLists(): void {
-    this.regularUsers = this.filteredUsers.filter((user) => !user.isAdmin);
-    this.adminUsers = this.filteredUsers.filter((user) => user.isAdmin);
+    this.regularUsers = this.filteredUsers.filter((user) => !user.isAdmin && !user.isSuperAdmin);
+    this.adminUsers = this.filteredUsers.filter((user) => user.isAdmin && !user.isSuperAdmin);
+    this.superAdminUsers = this.filteredUsers.filter((user) => user.isSuperAdmin);
   }
 
   async toggleAccUser(user: any): Promise<void> {
@@ -67,11 +79,10 @@ export class UserManagementComponent implements OnInit {
 
   async sendMessage(userId: string): Promise<void> {
     const { value: msg, isConfirmed } = await swalMessage();
-    console.log(msg);
     if (isConfirmed && msg) {
       this.adminService.notification(userId, msg.message).subscribe({
         next: () => {
-          swalNotify("success","Message sent successfully");
+          swalNotify("success", "Message sent successfully");
         },
         error: (error) => {
           console.error('Error sending message:', error);
@@ -80,4 +91,37 @@ export class UserManagementComponent implements OnInit {
       });
     }
   }
-}
+  
+  // make and revoke admin functions
+
+    async makeAdmin(user:any):Promise<void>{
+      
+      if(user.isSuspended){
+        swalNotify("error",`${user.name} account is Suspended`)
+        return;
+      }
+      const choose = await swalAlert('question',"Are you sure ?","user will promote to admin");
+      if(!choose.isConfirmed)return
+
+      this.adminService.makeorRevokeAdmin(this.email,user.email).subscribe({
+        next:(res)=>console.log(res),
+        error:(err)=> console.log(err)
+      })
+      user.isAdmin=true;
+      this.updateUserLists();
+    }
+
+  async revokeAdmin(user:any):Promise<void>{
+    
+    const choose = await swalAlert('question',"Are you sure ?","admin privileges will be revoked");
+    
+    if(!choose.isConfirmed)return
+      this.adminService.makeorRevokeAdmin(this.email,user.email).subscribe({
+        next:(res)=>console.log(res),
+        error:(err)=> console.log(err)
+      })
+
+      user.isAdmin=false;
+      this.updateUserLists();
+    }
+  }

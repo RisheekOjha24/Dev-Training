@@ -15,6 +15,7 @@ export class AuthService {
     email: '',
     isAdmin: false,
     isSuspended: false,
+    isSuperAdmin:false,
     unreadCount: 0,
   };
 
@@ -22,6 +23,7 @@ export class AuthService {
     username: string;
     email: string;
     isAdmin: boolean;
+    isSuperAdmin:boolean;
     isSuspended: boolean;
     unreadCount: number;
   }>(this.defaultUser);
@@ -34,7 +36,7 @@ export class AuthService {
     }
   }
 
-  private baseUrl = 'http://localhost:4500/api/auth';
+  private baseUrl = 'http://localhost:4600/api/auth';
 
   register(user: {
     name: string;
@@ -68,6 +70,7 @@ export class AuthService {
     username,
     email,
     isAdmin,
+    isSuperAdmin,
     isSuspended,
     unreadCount,
   }: {
@@ -76,6 +79,8 @@ export class AuthService {
     isAdmin: boolean;
     isSuspended: boolean;
     unreadCount: number;
+    isSuperAdmin:boolean;
+    
   }): void {
     // Emit the new user object
     this.currentUser.next({
@@ -84,6 +89,7 @@ export class AuthService {
       isAdmin,
       isSuspended,
       unreadCount,
+      isSuperAdmin
     });
   }
 }

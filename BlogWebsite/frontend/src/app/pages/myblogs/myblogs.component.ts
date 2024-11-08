@@ -23,7 +23,7 @@ export class MyblogsComponent implements OnInit {
   username: string | null = null;
   email: string | null = null;
   searchTerm: string = '';
-  sortBy: string = 'sortItem';
+  sortBy: string = 'recent';
 
   options: AnimationOptions = {
     path: 'https://lottie.host/9ef23ea9-e622-4b3a-a79e-b9d16ec7c8de/VnzAQYHWx6.json',
@@ -52,6 +52,7 @@ export class MyblogsComponent implements OnInit {
         next: (data) => {
           this.blogs = data;
           this.filteredBlogs = data;
+          this.sortBlogs();
           console.log(this.blogs);
         },
         error: (error) => {
@@ -89,9 +90,6 @@ export class MyblogsComponent implements OnInit {
       }
     })
 
-
-    // if(this.email!=null)
-    // this.fetchBlogsbyEmail(this.email);
   }
 
   //sorting and filtering code

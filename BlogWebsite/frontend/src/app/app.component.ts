@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   userName: string | null = null;
   email: string | null = null;
   isAdmin: boolean | null = null;
+  isSuperAdmin:boolean | null = null;
   isSuspended: boolean | null = null;
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -29,9 +30,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe((activeUser) => {
-      this.userName = activeUser?.username;
-      this.email = activeUser?.email;
-      this.isAdmin = activeUser?.isAdmin;
+      this.userName = activeUser.username;
+      this.email = activeUser.email;
+      this.isAdmin = activeUser.isAdmin;
+      this.isSuperAdmin = activeUser.isSuperAdmin;
       this.isSuspended = activeUser.isSuspended;
       this.badgeCount = activeUser.unreadCount;
     });
@@ -58,6 +60,7 @@ export class AppComponent implements OnInit {
         isAdmin: false,
         isSuspended: false,
         unreadCount: 0,
+        isSuperAdmin:false
       });
       localStorage.clear();
       window.location.href = '/login';
