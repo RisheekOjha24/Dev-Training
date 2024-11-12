@@ -1,9 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const session = require('express-session');
+const {setUser}= require('./service/auth');
 const app = express();
+const cookieParser = require('cookie-parser');
 
-// In-memory hashmap to store users
+const decoded = require('./middleware/verifyToken');
+app.use(cookieParser());
+
 let users = new Map();
 
 app.set('view engine', 'pug');
@@ -11,18 +14,22 @@ app.set('views', './views');
 
 // Middleware to parse POST data
 app.use(express.urlencoded({ extended: true }));
-
-// Session configuration
-app.use(session({
-  secret: 'ANimal',  
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } 
-}));
-
 // Route for Home page (landing)
-app.get('/', (req, res) => {
-  res.render('index', { isAdmin: true, username: "Risheek" });
+
+app.get('/', decoded,(req, res) => {
+
+  try {
+    const token = req.cookies.uuid;
+   
+
+    console.log(token);
+    
+    res.render('index', { isAdmin: true, username: "Risheek" });
+    
+  } catch (error) {
+    res.send(`<h1> Plesase login dear user</h1>`)
+  }
+ 
 });
 
 // Route for Login page
@@ -52,34 +59,40 @@ app.post('/signup', async (req, res) => {
     <a href="/login">Login</a>`);
 });
 
-
+// Handle Login form submission
 app.post('/login', async (req, res) => {
-
+  
   const { username, password } = req.body;
 
-  if (!users.has(username)) {
-    return res.send('User not found. Please sign up first.');
-  }
+  try {
+    
+    if (!users.has(username)) {
+      return res.send('User not found. Please sign up first.');
+    }
 
-  const storedPassword = users.get(username);
-  const match = await bcrypt.compare(password, storedPassword);
-
-  if (match) {
-    req.session.user = username;  // Store the user in session
-    res.send('Login successful! Welcome ' + username);
-  } else {
-    res.send('Incorrect password. Please try again.');
+    const token= setUser(username);
+    
+    res.cookie('uuid',token);
+  
+    const storedPassword = users.get(username);
+    const match = await bcrypt.compare(password, storedPassword);
+  
+    if (match) {
+      res.send(`Login successful! Welcome <a href='/'>Home<a>` + username);
+    } else {
+      res.send('Incorrect password. Please try again.');
+    }
+    
+  } catch (error) {
+    console.log(error);
   }
+  
+  
 });
 
-// Route for Logout
+// Route for Logout (No session-related logic needed)
 app.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.send('Error in logging out');
-    }
-    res.send('Logged out successfully');
-  });
+  res.send('You are logged out. No session to clear.');
 });
 
 const PORT = 3800;

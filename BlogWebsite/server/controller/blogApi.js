@@ -3,7 +3,7 @@ const Blog=require("../model/blogSchema");
 const cloudinary=require("../utils/cloudinary");
 
 const newBlog = async (req, res) => {
-  const { blogId, title, content, email } = req.body;
+  const { blogId , title, content, email } = req.body;
 
   try {
 
