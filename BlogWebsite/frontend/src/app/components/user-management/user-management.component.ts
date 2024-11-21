@@ -71,9 +71,8 @@ export class UserManagementComponent implements OnInit {
     const res = await swalAlert('question', msg, 'Click Yes to proceed');
 
     if (res.isConfirmed) {
-      this.adminService.suspendUser(user._id).subscribe(() => {
-        this.fetchUsers(); // Refresh the user list after suspension
-      });
+      this.adminService.suspendUser(user._id).subscribe();
+      user.isSuspended=!user.isSuspended;
     }
   }
 

@@ -54,13 +54,17 @@ export class CreateBlogComponent implements OnInit {
       this.imageUrl = URL.createObjectURL(file); // Display a preview
     }
   }
-
-  // Method to remove the existing image
+  
   removeImage(): void {
-    this.selectedFile = null; // Clear selected file
-    this.imageUrl = null; // Clear image URL
+    this.selectedFile = null;
+    this.imageUrl = null; 
+  
+    const fileInput = document.getElementById('imageUpload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; 
+    }
   }
-
+  
   async onSubmit(): Promise<void> {
     const response = await swalAlert('question', 'sure you want to publish ?');
     if (!response.isConfirmed) return;
@@ -103,5 +107,9 @@ export class CreateBlogComponent implements OnInit {
     this.blogForm.reset();
     this.selectedFile = null;
     this.imageUrl = null;
+    const fileInput = document.getElementById('imageUpload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; 
+    }
   }
 }
