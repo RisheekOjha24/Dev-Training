@@ -18,10 +18,7 @@ const Navbar = () => {
             <FaHome size={24} />
             <span className="text-sm mt-2">Home</span>
           </Link>
-          <Link to="/book" className="flex flex-col items-center cursor-pointer">
-            <FaBook size={24} />
-            <span className="text-sm mt-2">Books</span>
-          </Link>
+    
           <Link to="/profile" className="flex flex-col items-center cursor-pointer">
             <FaUser size={24} />
             <span className="text-sm mt-2">Profile</span>
