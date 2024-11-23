@@ -54,14 +54,26 @@ const notifyUser = async (req, res) => {
 
     // Find the user by ID
     const user = await User.findById(id);
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // we are seeting the limit of sending of storiung notification to 10
+    // we are seeting the limit of sending of storing notification to 10
      if (user.notifications.length >= 10) {
-    //  Removing the oldest notification
        user.notifications.shift();
+     }
+
+     console.log("Hash map = ",users);
+
+     console.log("users email ",users.email , "real email = ",user.email);
+
+     const userSocketId = global.users.get(user.email); // Get the socket ID using the user's email
+     console.log(userSocketId);
+     if (userSocketId) {
+      console.log("User socket id : ",userSocketId);
+      global.io.to(userSocketId).emit("notification", { message: msg }); 
+      console.log(`Notification sent to user ${user.email}`);
      }
 
     user.notifications.push({
@@ -79,7 +91,7 @@ const notifyUser = async (req, res) => {
     return res
       .status(500)
       .json({ error: "An error occurred while notifying the user" });
-  }
+    }  
 };
 
 const makeOrRemoveUserAdmin = async (req, res) => {
@@ -104,6 +116,7 @@ const makeOrRemoveUserAdmin = async (req, res) => {
       message: `User ${targetUser.isAdmin ? "promoted to" : "demoted from"} admin successfully.`,
       user: targetUser,
     });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "An error occurred while updating user admin status." });

@@ -5,7 +5,6 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { swalNotify } from '../../components/swalNotify';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,

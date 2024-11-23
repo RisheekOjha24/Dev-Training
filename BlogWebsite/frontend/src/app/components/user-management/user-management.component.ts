@@ -6,7 +6,8 @@ import { swalAlert } from '../swalAlert';
 import { swalMessage } from '../swalMessage';
 import { swalNotify } from '../swalNotify';
 import { AuthService } from '../../service/auth.service';
-import { trigger } from '@angular/animations';
+import { io, Socket } from 'socket.io-client';
+
 
 @Component({
   selector: 'app-user-management',
@@ -23,7 +24,8 @@ export class UserManagementComponent implements OnInit {
   superAdminUsers: any[] = []; // Holds super admin users
   searchTerm: string = '';
   isCurrSuperAdmin:boolean=false;
-  email:string=""
+  email:string="";
+  socket: Socket|null=null;
 
   private adminService = inject(AdminService);
   private authService = inject(AuthService);
@@ -34,6 +36,9 @@ export class UserManagementComponent implements OnInit {
       this.email=data.email;
     });
     this.fetchUsers();
+
+    this.socket = io('http://localhost:4600');
+
   }
 
   fetchUsers(): void {
@@ -42,7 +47,7 @@ export class UserManagementComponent implements OnInit {
         this.users = userArray;
         console.log(this.users);
         this.filteredUsers = userArray;
-        this.updateUserLists(); // Initialize filtered lists
+        this.updateUserLists(); 
       },
       error: (error) => {
         console.error('Error fetching users:', error);
@@ -72,16 +77,22 @@ export class UserManagementComponent implements OnInit {
 
     if (res.isConfirmed) {
       this.adminService.suspendUser(user._id).subscribe();
-      user.isSuspended=!user.isSuspended;
+      user.isSuspended=!user.isSuspended; 
     }
   }
 
   async sendMessage(userId: string): Promise<void> {
+             
+
     const { value: msg, isConfirmed } = await swalMessage();
+    
     if (isConfirmed && msg) {
       this.adminService.notification(userId, msg.message).subscribe({
         next: () => {
           swalNotify("success", "Message sent successfully");
+          this.authService.socket.on("notification",(data)=>{
+            console.log(data);
+          })
         },
         error: (error) => {
           console.error('Error sending message:', error);

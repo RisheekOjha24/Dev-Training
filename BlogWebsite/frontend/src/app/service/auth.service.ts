@@ -1,13 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { io, Socket } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
+  socket: Socket;
+  
   constructor(private http: HttpClient) {
     this.loadUserFromStorage();
+    this.socket=io('http://localhost:4600');
   }
 
   private defaultUser = {
@@ -37,7 +42,7 @@ export class AuthService {
   }
 
   private baseUrl = 'http://localhost:4600/api/auth';
-
+  
   register(user: {
     name: string;
     email: string;
@@ -48,6 +53,9 @@ export class AuthService {
   }
 
   login(credentials: { email: string; password: string }): Observable<any> {
+    
+    this.socket.emit("user-logged-in",credentials.email);
+
     return this.http.post<any>(`${this.baseUrl}/login`, credentials);
   }
   getNotificationByEmail(userEmail: string): Observable<any> {
