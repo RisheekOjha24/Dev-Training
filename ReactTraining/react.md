@@ -81,3 +81,8 @@ MyComponent.propTypes = {
 
 
 <!-- If the prop values passed to a React component mismatch the declared PropTypes, React will display a warning in the developer console. However, the application will not crash or throw an error—PropTypes is only used during development for validation and debugging. -->
+
+# Lazy loading
+When you load a website or application, you typically load a lot of resources: HTML, CSS, JavaScript, images, fonts, etc. If all these resources are loaded at once, the initial page load can be very slow, especially for users with slower internet connections.
+
+Lazy loading helps by only loading the critical resources (e.g., the content that's visible above the fold or the first part of a page that users see immediately). Other resources, like images, videos, or even additional components, are only loaded when they are needed (e.g., when the user scrolls down to them).

@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.list-container-box {
+    background-color: rgb(230, 222, 236);
+    max-height: 100vh; /* Set your desired maximum height */
+    overflow-y: auto; 
+    font-family:"DM Sans" ;
+    overflow-x: hidden;
+    padding: 10px; /* Add padding if needed */
+}
+
+.book-title{
+   font-family: "Comfortaa", sans-serif;
+ font-weight: bolder;
+}

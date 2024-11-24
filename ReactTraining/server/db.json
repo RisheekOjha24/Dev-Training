@@ -1,5 +1,5 @@
 {
-    "books": [
+    "book": [
       {
         "id": 1,
         "title": "The Great Gatsby",
@@ -10,11 +10,76 @@
         "language": "English",
         "page_count": 180,
         "description": "A story of the Jazz Age in the United States in the 1920s, focusing on the mysterious Jay Gatsby.",
-        "cover_image_url": "https://example.com/great-gatsby-cover.jpg",
+        "cover_image_url": "https://m.media-amazon.com/images/I/817+192hZyS._SL1500_.jpg",
         "type": "Fiction"
       },
       {
         "id": 2,
+        "title": "Nationalism ",
+        "author": "Rabindranath Tagore",
+        "isbn": "9780399590504",
+        "publisher": "Fingerprint",
+        "publication_date": "1917-02-20",
+        "language": "English",
+        "page_count": 80,
+        "description": "Nationalism is a comprehensive exploration of the historical, political, and cultural phenomenon of nationalism. Written by Rabindranath Tagore, a renowned poet and philosopher, this thought-provoking book delves into the complexities and consequences of nationalistic fervor.",
+        "cover_image_url": "https://m.media-amazon.com/images/I/81cd2YOY6iS._SY522_.jpg",
+        "type": "Non-Fiction"
+      },
+      {
+        "id": 3,
+        "title": "The Time Machine",
+        "author": "H.G. Wells",
+        "isbn": "9780553380163",
+        "publisher": "Bantam Books",
+        "publication_date": "1988-03-01",
+        "language": "English",
+        "page_count": 212,
+        "description": "A landmark book on the nature of time and space, written by physicist H.G. Wells",
+        "cover_image_url": "https://m.media-amazon.com/images/I/71+n2VSAiXS._SL1500_.jpg",
+        "type": "Science"
+      },
+      {
+        "id": 4,
+        "title": "Vishwadarshan",
+        "author": "Mahatma Ramratna Thapaliyal",
+        "isbn": "9781234567890",
+        "publisher": "Spiritual Insights Press",
+        "publication_date": "2023-07-15",
+        "language": "English",
+        "page_count": 340,
+        "description": "Vishwadarshan is an insight into the workings of life and the universe, its inception, creation, and cessation, received as a revelation by Mahatma Thapaliyal as a consequence of his seventeen-year-long penance in the Himalayas.",
+        "cover_image_url": "https://m.media-amazon.com/images/I/91wUFiHq0zL._SY522_.jpg",
+        "type": "Science"
+      },
+        {
+          "id": 5,
+          "title": "A Little Princess",
+          "author": "Frances Hodgson Burnett",
+          "isbn": "8978345391803",
+          "publisher": "Del Rey",
+          "publication_date": "2018-10-12",
+          "language": "English",
+          "page_count": 224,
+          "description": "A Little Princess is a children's classic novel by Frances Hodgson Burnett about a young girl named Sara Crewe who experiences a sudden reversal of fortune",
+          "cover_image_url": "https://m.media-amazon.com/images/I/71gkdmrYTrL._SY522_.jpg",
+          "type": "Comedy"
+        },
+      {
+        "id": 6,
+        "title": "A Passage To India",
+        "author": "E. M. Forster",
+        "isbn": "9780062316110",
+        "publisher": "Harper",
+        "publication_date": "1924-04-06",
+        "language": "English",
+        "page_count": 443,
+        "description": " The novel examines racism and colonialism as well as a theme Forster developed in many earlier works, namely, the need to maintain both ties to the earth and a cerebral life of the imagination.",
+        "cover_image_url": "https://m.media-amazon.com/images/I/71K-InZRoUL._SY522_.jpg",
+        "type": "Non-Fiction"
+      },
+      {
+        "id": 7,
         "title": "To Kill a Mockingbird",
         "author": "Harper Lee",
         "isbn": "9780060935467",
@@ -23,74 +88,35 @@
         "language": "English",
         "page_count": 281,
         "description": "A novel about racial injustice in the Deep South, seen through the eyes of Scout Finch, a young girl.",
-        "cover_image_url": "https://example.com/to-kill-a-mockingbird-cover.jpg",
+        "cover_image_url": "https://m.media-amazon.com/images/I/61cmFOBF6IL._SY522_.jpg",
         "type": "Fiction"
       },
-      {
-        "id": 3,
-        "title": "A Brief History of Time",
-        "author": "Stephen Hawking",
-        "isbn": "9780553380163",
-        "publisher": "Bantam Books",
-        "publication_date": "1988-03-01",
-        "language": "English",
-        "page_count": 212,
-        "description": "A landmark book on the nature of time and space, written by physicist Stephen Hawking.",
-        "cover_image_url": "https://example.com/a-brief-history-of-time-cover.jpg",
-        "type": "Science"
-      },
-      {
-        "id": 4,
-        "title": "The Selfish Gene",
-        "author": "Richard Dawkins",
-        "isbn": "9780199291151",
-        "publisher": "Oxford University Press",
-        "publication_date": "1976-01-01",
-        "language": "English",
-        "page_count": 360,
-        "description": "A popular science book that presents an evolutionary perspective on natural selection.",
-        "cover_image_url": "https://example.com/selfish-gene-cover.jpg",
-        "type": "Science"
-      },
-      {
-        "id": 5,
-        "title": "The Hitchhiker's Guide to the Galaxy",
-        "author": "Douglas Adams",
-        "isbn": "9780345391803",
-        "publisher": "Del Rey",
-        "publication_date": "1979-10-12",
-        "language": "English",
-        "page_count": 224,
-        "description": "A comedic science fiction novel about Arthur Dent's journey through the galaxy after Earth is destroyed.",
-        "cover_image_url": "https://example.com/hitchhikers-guide-cover.jpg",
-        "type": "Comedy"
-      },
-      {
-        "id": 6,
-        "title": "Sapiens: A Brief History of Humankind",
-        "author": "Yuval Noah Harari",
-        "isbn": "9780062316110",
-        "publisher": "Harper",
-        "publication_date": "2015-02-10",
-        "language": "English",
-        "page_count": 443,
-        "description": "An exploration of the history of humankind from the emergence of Homo sapiens to the present.",
-        "cover_image_url": "https://example.com/sapiens-cover.jpg",
-        "type": "Non-Fiction"
-      },
-      {
-        "id": 7,
-        "title": "Educated: A Memoir",
-        "author": "Tara Westover",
-        "isbn": "9780399590504",
-        "publisher": "Random House",
-        "publication_date": "2018-02-20",
-        "language": "English",
-        "page_count": 334,
-        "description": "A memoir of a woman who grows up in a strict and isolated family in rural Idaho and eventually escapes to pursue an education.",
-        "cover_image_url": "https://example.com/educated-cover.jpg",
-        "type": "Non-Fiction"
-      }
+       {
+         "id": 8,
+         "title": "BUDDHA",
+         "author": "Pranay Gupta",
+         "isbn": "9789393891404",
+         "publisher": "Prints Publications Pvt Ltd",
+         "publication_date": "2020-11-01",
+         "language": "English",
+         "page_count": 461,
+         "description": "A book that distils the greatest mystic lessons for leadership and success, with deep insights for today’s times and for the future. The book highlights the key principles and values of Buddha’s root-level consciousness teachings. For overall excellence in life, it has become vital to understand these lessons.",
+         "cover_image_url": "https://m.media-amazon.com/images/I/61NCPcCVENL._SX342_SY445_.jpg",
+         "type": "Non-Fiction"
+       },
+        {
+          "id": 9,
+          "title": "Man-eaters of Kumaon",
+          "author": "Jim Corbett",
+          "isbn": "91893933943404",
+          "publisher": "Denwood Pulications",
+          "publication_date": "2019-10-08",
+          "language": "English",
+          "page_count": 562,
+          "description": "Man-Eaters of Kumaon is a book by Jim Corbett that details his experiences hunting man-eating tigers and leopards in the Kumaon region of India in the early 20th century",
+          "cover_image_url": "https://m.media-amazon.com/images/I/81-li8dnNRS._SY522_.jpg",
+          "type": "Non-Fiction"
+        }
     ]
   }
   
