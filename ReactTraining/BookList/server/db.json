@@ -1,0 +1,378 @@
+{
+  "book": [
+    {
+      "id": 1,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "isbn": "9780743273565",
+      "publisher": "Scribner",
+      "publication_date": "1925-04-10",
+      "language": "English",
+      "page_count": 180,
+      "description": "A story of the Jazz Age in the United States in the 1920s, focusing on the mysterious Jay Gatsby.",
+      "cover_image_url": "https://m.media-amazon.com/images/I/817+192hZyS._SL1500_.jpg",
+      "type": "Fiction"
+    },
+    {
+      "id": 2,
+      "title": "Nationalism ",
+      "author": "Rabindranath Tagore",
+      "isbn": "9780399590504",
+      "publisher": "Fingerprint",
+      "publication_date": "1917-02-20",
+      "language": "English",
+      "page_count": 80,
+      "description": "Nationalism is a comprehensive exploration of the historical, political, and cultural phenomenon of nationalism. Written by Rabindranath Tagore, a renowned poet and philosopher, this thought-provoking book delves into the complexities and consequences of nationalistic fervor.",
+      "cover_image_url": "https://m.media-amazon.com/images/I/81cd2YOY6iS._SY522_.jpg",
+      "type": "Non-Fiction"
+    },
+    {
+      "id": 3,
+      "title": "The Time Machine",
+      "author": "H.G. Wells",
+      "isbn": "9780553380163",
+      "publisher": "Bantam Books",
+      "publication_date": "1988-03-01",
+      "language": "English",
+      "page_count": 212,
+      "description": "A landmark book on the nature of time and space, written by physicist H.G. Wells",
+      "cover_image_url": "https://m.media-amazon.com/images/I/71+n2VSAiXS._SL1500_.jpg",
+      "type": "Science"
+    },
+    {
+      "id": 4,
+      "title": "Vishwadarshan",
+      "author": "Mahatma Ramratna Thapaliyal",
+      "isbn": "9781234567890",
+      "publisher": "Spiritual Insights Press",
+      "publication_date": "2023-07-15",
+      "language": "English",
+      "page_count": 340,
+      "description": "Vishwadarshan is an insight into the workings of life and the universe, its inception, creation, and cessation, received as a revelation by Mahatma Thapaliyal as a consequence of his seventeen-year-long penance in the Himalayas.",
+      "cover_image_url": "https://m.media-amazon.com/images/I/91wUFiHq0zL._SY522_.jpg",
+      "type": "Science"
+    },
+    {
+      "id": 5,
+      "title": "A Little Princess",
+      "author": "Frances Hodgson Burnett",
+      "isbn": "8978345391803",
+      "publisher": "Del Rey",
+      "publication_date": "2018-10-12",
+      "language": "English",
+      "page_count": 224,
+      "description": "A Little Princess is a children's classic novel by Frances Hodgson Burnett about a young girl named Sara Crewe who experiences a sudden reversal of fortune",
+      "cover_image_url": "https://m.media-amazon.com/images/I/71gkdmrYTrL._SY522_.jpg",
+      "type": "Comedy"
+    },
+    {
+      "id": 6,
+      "title": "A Passage To India",
+      "author": "E. M. Forster",
+      "isbn": "9780062316110",
+      "publisher": "Harper",
+      "publication_date": "1924-04-06",
+      "language": "English",
+      "page_count": 443,
+      "description": " The novel examines racism and colonialism as well as a theme Forster developed in many earlier works, namely, the need to maintain both ties to the earth and a cerebral life of the imagination.",
+      "cover_image_url": "https://m.media-amazon.com/images/I/71K-InZRoUL._SY522_.jpg",
+      "type": "Non-Fiction"
+    },
+    {
+      "id": 7,
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "isbn": "9780060935467",
+      "publisher": "HarperCollins",
+      "publication_date": "1960-07-11",
+      "language": "English",
+      "page_count": 281,
+      "description": "A novel about racial injustice in the Deep South, seen through the eyes of Scout Finch, a young girl.",
+      "cover_image_url": "https://m.media-amazon.com/images/I/61cmFOBF6IL._SY522_.jpg",
+      "type": "Fiction"
+    },
+    {
+      "id": 8,
+      "title": "BUDDHA",
+      "author": "Pranay Gupta",
+      "isbn": "9789393891404",
+      "publisher": "Prints Publications Pvt Ltd",
+      "publication_date": "2020-11-01",
+      "language": "English",
+      "page_count": 461,
+      "description": "A book that distils the greatest mystic lessons for leadership and success, with deep insights for today’s times and for the future. The book highlights the key principles and values of Buddha’s root-level consciousness teachings. For overall excellence in life, it has become vital to understand these lessons.",
+      "cover_image_url": "https://m.media-amazon.com/images/I/61NCPcCVENL._SX342_SY445_.jpg",
+      "type": "Non-Fiction"
+    },
+    {
+      "id": 9,
+      "title": "Man-eaters of Kumaon",
+      "author": "Jim Corbett",
+      "isbn": "91893933943404",
+      "publisher": "Denwood Pulications",
+      "publication_date": "2019-10-08",
+      "language": "English",
+      "page_count": 562,
+      "description": "Man-Eaters of Kumaon is a book by Jim Corbett that details his experiences hunting man-eating tigers and leopards in the Kumaon region of India in the early 20th century",
+      "cover_image_url": "https://m.media-amazon.com/images/I/81-li8dnNRS._SY522_.jpg",
+      "type": "Non-Fiction"
+    }
+  ],
+  "myBooks": [
+    {
+      "0": {
+        "kind": "books#volume",
+        "id": "drUFN1hRMWoC",
+        "etag": "2ce1IcNktb8",
+        "selfLink": "https://www.googleapis.com/books/v1/volumes/drUFN1hRMWoC",
+        "volumeInfo": {
+          "title": "Freedom",
+          "subtitle": "The Courage to Be Yourself",
+          "authors": [
+            "Osho"
+          ],
+          "publisher": "St. Martin's Griffin",
+          "publishedDate": "2007-04-01",
+          "description": "Learn how to set yourself free with the philosophies of one of the twentieth century’s greatest spiritual teachers in Freedom: The Courage to Be Yourself. In Freedom, Osho outlines three stages of freedom. The first is “freedom from,” which is a freedom that comes from breaking out of what he calls the “psychological slavery” imposed by outside forces such as parents, society, or religion. The next stage is “freedom for,” a positive freedom that comes from embracing and creating something—a fulfilling relationship, for example, or an artistic or humanitarian vision. And lastly there is “just freedom,” the highest and ultimate freedom. This last freedom is more than being for or against something; it is the freedom of simply being oneself and responding truthfully to each moment. This book helps readers to identify the obstacles to their freedom, both circumstantial and self-imposed, to choose their battles wisely, and to find the courage to be true to themselves. Osho challenges readers to examine and break free of the conditioned belief systems and prejudices that limit their capacity to enjoy life in all its richness. He has been described by the Sunday Times of London as one of the “1000 Makers of the 20th Century” and by Sunday Mid-Day (India) as one of the ten people—along with Gandhi, Nehru, and Buddha—who have changed the destiny of India. Since his death in 1990, the influence of his teachings continues to expand, reaching seekers of all ages in virtually every country of the world.",
+          "industryIdentifiers": [
+            {
+              "type": "ISBN_13",
+              "identifier": "9781429907712"
+            },
+            {
+              "type": "ISBN_10",
+              "identifier": "1429907711"
+            }
+          ],
+          "readingModes": {
+            "text": true,
+            "image": false
+          },
+          "pageCount": 186,
+          "printType": "BOOK",
+          "categories": [
+            "Body, Mind & Spirit"
+          ],
+          "averageRating": 5,
+          "ratingsCount": 3,
+          "maturityRating": "NOT_MATURE",
+          "allowAnonLogging": true,
+          "contentVersion": "0.8.3.0.preview.2",
+          "panelizationSummary": {
+            "containsEpubBubbles": false,
+            "containsImageBubbles": false
+          },
+          "imageLinks": {
+            "smallThumbnail": "http://books.google.com/books/content?id=drUFN1hRMWoC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+            "thumbnail": "http://books.google.com/books/content?id=drUFN1hRMWoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+          },
+          "language": "en",
+          "previewLink": "http://books.google.co.in/books?id=drUFN1hRMWoC&printsec=frontcover&dq=freedom&hl=&cd=2&source=gbs_api",
+          "infoLink": "https://play.google.com/store/books/details?id=drUFN1hRMWoC&source=gbs_api",
+          "canonicalVolumeLink": "https://play.google.com/store/books/details?id=drUFN1hRMWoC"
+        },
+        "saleInfo": {
+          "country": "IN",
+          "saleability": "FOR_SALE",
+          "isEbook": true,
+          "listPrice": {
+            "amount": 434.67,
+            "currencyCode": "INR"
+          },
+          "retailPrice": {
+            "amount": 304.27,
+            "currencyCode": "INR"
+          },
+          "buyLink": "https://play.google.com/store/books/details?id=drUFN1hRMWoC&rdid=book-drUFN1hRMWoC&rdot=1&source=gbs_api",
+          "offers": [
+            {
+              "finskyOfferType": 1,
+              "listPrice": {
+                "amountInMicros": 434670000,
+                "currencyCode": "INR"
+              },
+              "retailPrice": {
+                "amountInMicros": 304270000,
+                "currencyCode": "INR"
+              }
+            }
+          ]
+        },
+        "accessInfo": {
+          "country": "IN",
+          "viewability": "PARTIAL",
+          "embeddable": true,
+          "publicDomain": false,
+          "textToSpeechPermission": "ALLOWED",
+          "epub": {
+            "isAvailable": true,
+            "acsTokenLink": "http://books.google.co.in/books/download/Freedom-sample-epub.acsm?id=drUFN1hRMWoC&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+          },
+          "pdf": {
+            "isAvailable": false
+          },
+          "webReaderLink": "http://play.google.com/books/reader?id=drUFN1hRMWoC&hl=&source=gbs_api",
+          "accessViewStatus": "SAMPLE",
+          "quoteSharingAllowed": false
+        },
+        "searchInfo": {
+          "textSnippet": "This book helps readers to identify the obstacles to their freedom, both circumstantial and self-imposed, to choose their battles wisely, and to find the courage to be true to themselves."
+        }
+      },
+      "1": {
+        "kind": "books#volume",
+        "id": "cvee0AEACAAJ",
+        "etag": "HgJBAndvL60",
+        "selfLink": "https://www.googleapis.com/books/v1/volumes/cvee0AEACAAJ",
+        "volumeInfo": {
+          "title": "India's Freedom",
+          "authors": [
+            "Jawaharlal Nehru"
+          ],
+          "publishedDate": "1965",
+          "industryIdentifiers": [
+            {
+              "type": "OTHER",
+              "identifier": "OCLC:491413976"
+            }
+          ],
+          "readingModes": {
+            "text": false,
+            "image": false
+          },
+          "pageCount": 0,
+          "printType": "BOOK",
+          "maturityRating": "NOT_MATURE",
+          "allowAnonLogging": false,
+          "contentVersion": "preview-1.0.0",
+          "panelizationSummary": {
+            "containsEpubBubbles": false,
+            "containsImageBubbles": false
+          },
+          "language": "en",
+          "previewLink": "http://books.google.co.in/books?id=cvee0AEACAAJ&dq=freedom&hl=&cd=3&source=gbs_api",
+          "infoLink": "http://books.google.co.in/books?id=cvee0AEACAAJ&dq=freedom&hl=&source=gbs_api",
+          "canonicalVolumeLink": "https://books.google.com/books/about/India_s_Freedom.html?hl=&id=cvee0AEACAAJ"
+        },
+        "saleInfo": {
+          "country": "IN",
+          "saleability": "NOT_FOR_SALE",
+          "isEbook": false
+        },
+        "accessInfo": {
+          "country": "IN",
+          "viewability": "NO_PAGES",
+          "embeddable": false,
+          "publicDomain": false,
+          "textToSpeechPermission": "ALLOWED",
+          "epub": {
+            "isAvailable": false
+          },
+          "pdf": {
+            "isAvailable": false
+          },
+          "webReaderLink": "http://play.google.com/books/reader?id=cvee0AEACAAJ&hl=&source=gbs_api",
+          "accessViewStatus": "NONE",
+          "quoteSharingAllowed": false
+        }
+      },
+      "2": {
+        "kind": "books#volume",
+        "id": "H51st8_t--QC",
+        "etag": "Q5nwhHxeVk0",
+        "selfLink": "https://www.googleapis.com/books/v1/volumes/H51st8_t--QC",
+        "volumeInfo": {
+          "title": "The First and Last Freedom",
+          "authors": [
+            "J Krishnamurti"
+          ],
+          "publisher": "Random House",
+          "publishedDate": "2013-08-01",
+          "description": "If truth can set us free, where do we find it? In The First and Last Freedom, Krishnamurti argues that we will not find truth in formal institutions, nor in organised religions and their dogmas, nor in any guru or outside authority; for, according to Krishnamurti, truth can only be realised through self-understanding. Controversial and challenging, yet always enlightening, Krishnamurti guides us through society’s common concerns, such as suffering and fear, love and loneliness, sex and death, the meaning of life, the nature of God, and personal transformation - consistently relating these topics to the essential search for pure truth and perfect freedom. This classic philosophical and spiritual study offers wisdom and insights particularly suited to our own uncertain times.",
+          "industryIdentifiers": [
+            {
+              "type": "ISBN_13",
+              "identifier": "9781448175475"
+            },
+            {
+              "type": "ISBN_10",
+              "identifier": "144817547X"
+            }
+          ],
+          "readingModes": {
+            "text": true,
+            "image": false
+          },
+          "pageCount": 354,
+          "printType": "BOOK",
+          "categories": [
+            "Philosophy"
+          ],
+          "maturityRating": "NOT_MATURE",
+          "allowAnonLogging": true,
+          "contentVersion": "1.9.7.0.preview.2",
+          "panelizationSummary": {
+            "containsEpubBubbles": false,
+            "containsImageBubbles": false
+          },
+          "imageLinks": {
+            "smallThumbnail": "http://books.google.com/books/content?id=H51st8_t--QC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+            "thumbnail": "http://books.google.com/books/content?id=H51st8_t--QC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+          },
+          "language": "en",
+          "previewLink": "http://books.google.co.in/books?id=H51st8_t--QC&printsec=frontcover&dq=freedom&hl=&cd=4&source=gbs_api",
+          "infoLink": "https://play.google.com/store/books/details?id=H51st8_t--QC&source=gbs_api",
+          "canonicalVolumeLink": "https://play.google.com/store/books/details?id=H51st8_t--QC"
+        },
+        "saleInfo": {
+          "country": "IN",
+          "saleability": "FOR_SALE",
+          "isEbook": true,
+          "listPrice": {
+            "amount": 264.61,
+            "currencyCode": "INR"
+          },
+          "retailPrice": {
+            "amount": 185.23,
+            "currencyCode": "INR"
+          },
+          "buyLink": "https://play.google.com/store/books/details?id=H51st8_t--QC&rdid=book-H51st8_t--QC&rdot=1&source=gbs_api",
+          "offers": [
+            {
+              "finskyOfferType": 1,
+              "listPrice": {
+                "amountInMicros": 264610000,
+                "currencyCode": "INR"
+              },
+              "retailPrice": {
+                "amountInMicros": 185230000,
+                "currencyCode": "INR"
+              }
+            }
+          ]
+        },
+        "accessInfo": {
+          "country": "IN",
+          "viewability": "PARTIAL",
+          "embeddable": true,
+          "publicDomain": false,
+          "textToSpeechPermission": "ALLOWED",
+          "epub": {
+            "isAvailable": true,
+            "acsTokenLink": "http://books.google.co.in/books/download/The_First_and_Last_Freedom-sample-epub.acsm?id=H51st8_t--QC&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+          },
+          "pdf": {
+            "isAvailable": false
+          },
+          "webReaderLink": "http://play.google.com/books/reader?id=H51st8_t--QC&hl=&source=gbs_api",
+          "accessViewStatus": "SAMPLE",
+          "quoteSharingAllowed": false
+        },
+        "searchInfo": {
+          "textSnippet": "In The First and Last Freedom, Krishnamurti argues that we will not find truth in formal institutions, nor in organised religions and their dogmas, nor in any guru or outside authority; for, according to Krishnamurti, truth can only be ..."
+        }
+      },
+      "id": "3a1e"
+    }
+  ]
+}

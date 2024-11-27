@@ -40,20 +40,30 @@ The componentDidUpdate method provides both the previous state (prevState) and t
 ## render
 It is responsible for describing what the UI should look like based on the component's state and props. This method must return a React element (which is a description of what should appear on the screen) or null. React automatically calls render() when there are changes to the component's state or props, causing the component to re-render and update the UI accordingly.
 
+## ComponentDidMount 
+ComponentDidMount is a lifecycle method in React class components. It is invoked immediately after a component is mounted (inserted into the DOM). 
 
-## Sequence
-update Lifecycle Sequence
+Here’s the entire lifecycle sequence:
 
-1) shouldComponentUpdate(nextProps, nextState)
-Called before rendering to determine if the component should update or not.
-If it returns false, the rendering process (including render() and componentDidUpdate()) is skipped.
+## Mounting Phase:
 
-2) render()
-If shouldComponentUpdate() returns true, the component proceeds to re-render.
+constructor(props)
+getDerivedStateFromProps(props, state)
+render()
+componentDidMount()
+
+## Updating Phase:
+
+getDerivedStateFromProps(props, state)
+shouldComponentUpdate(nextProps, nextState)
+render()
+getSnapshotBeforeUpdate(prevProps, prevState)
 componentDidUpdate(prevProps, prevState)
 
-3) componentDidUpdate(prevprops,prevState)
-Called after the component has updated in the DOM. This is where you can perform side effects based on the update, such as fetching new data or working with DOM elements.
+## Unmounting Phase:
+
+componentWillUnmount()
+
 
 ## Pure Components
 Pure Components are components that only re-render when their props or state change. They are a type of component that automatically implements a shallow comparison of props and state to optimize performance by avoiding unnecessary renders.
@@ -86,3 +96,52 @@ MyComponent.propTypes = {
 When you load a website or application, you typically load a lot of resources: HTML, CSS, JavaScript, images, fonts, etc. If all these resources are loaded at once, the initial page load can be very slow, especially for users with slower internet connections.
 
 Lazy loading helps by only loading the critical resources (e.g., the content that's visible above the fold or the first part of a page that users see immediately). Other resources, like images, videos, or even additional components, are only loaded when they are needed (e.g., when the user scrolls down to them).
+
+
+# Higher-Order Components (HOCs)
+Definition: A higher-order component is a function that takes a component as input and returns a new component with additional functionality.
+Purpose: To share logic or behavior between multiple components.
+
+# Context-API
+
+import React, { createContext, useState } from 'react'
+import Child from '../components/Child'
+export const GlobalInfo = createContext();
+
+const ContextWork = () => {
+
+  const [color,setColor]=useState("orange");
+  const objProvider={bgColor:color};
+
+  return (
+    <GlobalInfo.Provider value={objProvider}>
+        <div className='flex justify-center flex-col align-bottom p-20'>
+         I am a Parent Component
+        <Child/>
+        </div>
+    </GlobalInfo.Provider>
+  )
+}
+
+export default ContextWork
+
+
+ <!-- now we use it inside  child component -->
+ import React, { useContext } from 'react'
+import { GlobalInfo } from '../pages/ContextWork'
+
+const Child = () => {
+
+    const abc= useContext(GlobalInfo);
+    const bgColor=abc.bgColor;
+
+  return (
+    <div style={{color:bgColor}}>First Child Component</div>
+  )
+}
+
+export default Child;
+
+
+# APIKEY
+AIzaSyAJIohIOXkz2biPDQDB3jH565w1PLukGwg
