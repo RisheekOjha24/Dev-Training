@@ -18,7 +18,8 @@ const Logout = () => {
 
       <button
         onClick={handleLogout}
-        className="px-2 py-1 bg-red-500 text-white font-semibold rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 transition duration-300"
+        style={{background:"black",fontFamily:"cursive"}}
+        className="px-2 py-1 text-white font-semibold rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2"
       >
         Logout
       </button>

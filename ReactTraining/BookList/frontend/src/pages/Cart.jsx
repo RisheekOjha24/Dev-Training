@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart, updateQuantity } from '../../store/cartDetails'; // Assuming these actions are defined in your cart slice
+import { removeFromCart, updateQuantity } from '../../store/cartDetails';
 import Navbar from '../components/Navbar';
-import { message } from 'antd'; // For showing messages
+import { message } from 'antd';
 import sweetAlert from '../components/sweetNotification';
 import { FaTrash } from "react-icons/fa";
+import Checkout from '../components/Checkout';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cartData.cartItems); // Ensure cartItems is the correct part of state
-
+  const cartItems = useSelector((state) => state.cartData.cartItems);
+  const [isCheckoutBtnClick,setCheckoutBtnClikc]=useState(false);
+  
   const [selectedItems, setSelectedItems] = useState([]); // State to track selected items
 
-  // Handle quantity update
+
   const handleQuantityChange = (bookId, quantity) => {
     if (quantity < 1) {
       message.error("Quantity cannot be less than 1.", 1);
@@ -21,7 +23,6 @@ const Cart = () => {
     dispatch(updateQuantity({ bookId, quantity }));
   };
 
-  // Handle item removal
   const handleRemoveItem = async (bookId) => {
     const response = await sweetAlert();
     if (!response.isConfirmed) return;
@@ -41,7 +42,6 @@ const Cart = () => {
     });
   };
 
-  // Handle bulk remove
   const handleBulkRemove = async () => {
     const response = await sweetAlert();
     if (!response.isConfirmed) return;
@@ -49,16 +49,19 @@ const Cart = () => {
     selectedItems.forEach(bookId => {
       dispatch(removeFromCart(bookId));
     });
-    setSelectedItems([]); // Clear selected items
+    setSelectedItems([]); 
     message.success("Selected items removed from cart.", 1);
   };
+
+  const handleCheckout=()=>{
+    setCheckoutBtnClikc(!isCheckoutBtnClick);
+  }
 
   return (
     <div className="flex h-screen">
       <Navbar />
       <div className="flex-1 p-8 list-container-box">
 
-        {/* Check if cart is empty */}
         {cartItems.length === 0 ? (
           <div className="text-center text-lg font-semibold text-gray-500">
             No items in your cart.
@@ -72,10 +75,10 @@ const Cart = () => {
                   <th className="p-4 text-left">
                     <input
                       type="checkbox"
-                      checked={selectedItems.length === cartItems.length} // Check all if all are selected
+                      checked={selectedItems.length === cartItems.length} 
                       onChange={() => {
                         if (selectedItems.length === cartItems.length) {
-                          setSelectedItems([]); // Deselect all if all are selected
+                          setSelectedItems([]); 
                         } else {
                           setSelectedItems(cartItems.map(item => item.bookId)); // Select all
                         }
@@ -157,7 +160,7 @@ const Cart = () => {
               {/* Bulk Remove Button */}
               <button
                 onClick={handleBulkRemove}
-                className="px-6 py-1 cursor-pointer bg-red-500 text-white rounded-md"
+                className="px-4 py-1 cursor-point rm-select-btn"
                 disabled={selectedItems.length === 0}
               >
                 Remove Selected
@@ -170,13 +173,14 @@ const Cart = () => {
             {/* Checkout Button */}
             <button
               className="px-6 py-2 bg-blue-500 text-white rounded-md"
-              onClick={() => message.success("Proceeding to checkout", 1)}
+              onClick={() => handleCheckout()}
             >
               Checkout
             </button>
           </div>
         )}
       </div>
+      {isCheckoutBtnClick && <Checkout/>}
     </div>
   );
 };

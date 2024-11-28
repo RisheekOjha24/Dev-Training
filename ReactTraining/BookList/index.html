@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <label for="inputtext">Enter text</label><input type="text" id="inputtext">
+        <br>
+        <br>
+        <span>Normal Text</span>
+        <h3 class="text1"></h3>
+
+        <span>Debounce Text</span>
+        <h3 class="text2"></h3>
+
+        <span>Throttle text</span>
+        <h3 class="text3"></h3>
+    </div>
+</body>
+<script>
+
+    const inputBox=document.querySelector('#inputtext');
+    const normalText = document.querySelector('.text1');
+    const DebounceText = document.querySelector('.text2');
+    const throttleText = document.querySelector('.text3');
+
+    inputBox.addEventListener('input',(e)=>{
+        const typedContent=e.target.value;
+        debouncFn(typedContent);
+        throttleFn(typedContent);
+        normalText.textContent=e.target.value;
+    })
+
+    const work=debouncFn("sk");
+
+    work();
+
+
+    var clearTime=undefined;
+
+    function debouncFn(value){
+        clearTimeout(clearTime);
+        clearTime= setTimeout(()=>{
+            DebounceText.textContent=value;
+        },2000)
+    }
+
+    let lastTime=0;
+
+    function throttleFn(value){
+
+        const now = new Date().getTime();
+        console.log("CurrentTime = ",now);
+        console.log("lastTime = ",lastTime);
+        console.log("Difference = ",now-lastTime );
+
+        if (now - lastTime >= 2000) { 
+            lastTime = now;
+            throttleText.textContent = value;
+        }
+    }
+
+</script>
+</html>

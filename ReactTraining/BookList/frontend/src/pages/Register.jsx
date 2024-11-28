@@ -5,15 +5,18 @@ import axios from 'axios';
 import {message } from "antd";
 import { signup } from '../../utils/APIRoute';
 import babyPanda1 from '../assets/restPanda.png'; 
-
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
+  
+  const navigate=useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [passwordValidity, setPasswordValidity] = useState({
@@ -23,8 +26,8 @@ const Register = () => {
     number: false,
     specialChar: false
   });
-
-  const [isTyping, setIsTyping] = useState(false);  // Track if user started typing
+  // Used to track when user started typing
+  const [isTyping, setIsTyping] = useState(false);  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,10 +60,10 @@ const Register = () => {
       password: value
     });
 
-    // Set typing flag to true when the user starts typing
+    // user started typing in password field
     if (!isTyping) setIsTyping(true);
 
-    // Validate password
+    // Validating password
     const validationResults = validatePassword(value);
     setPasswordValidity(validationResults);
   };
@@ -81,6 +84,7 @@ const Register = () => {
         password: formData.password
       });
       console.log('Registration successful:', response.data);
+      navigate('/login')
       message.success("you are registered succesfully",1)
     } catch (error) {
       message.error(error.response?.data.message || "An unexpected error",1);

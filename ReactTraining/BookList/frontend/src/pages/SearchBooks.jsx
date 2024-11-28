@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Spin } from "antd";
@@ -14,7 +13,6 @@ const SearchBooks = () => {
   const [genre, setGenre] = useState("");
   const [fetchedBookIds, setFetchedBookIds] = useState(new Set());
   const observerRef = useRef(null);
-  const navigate = useNavigate();
 
   const API_KEY = import.meta.env.VITE_API_KEY;
 

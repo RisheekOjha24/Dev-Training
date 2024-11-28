@@ -101,10 +101,12 @@
 }
 
 .quantity-btn{
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bolder;
   border-radius: 90%;
+  padding: 0 12px;
   color: white;
+  /* font-family: */
   background-color: rgb(38, 190, 170);
 }
 
@@ -130,4 +132,18 @@
   position: absolute;
   top:-10px;
   left: 40px;
+}
+
+.rm-select-btn{
+  background-color: #800020;
+  color: white;
+  transform: translateY(-5px);
+  border-radius: 28px;
+  cursor: pointer;
+}
+
+.name-top{
+  font-family: Parkinsans;
+  letter-spacing: 2px;
+  font-size: 20px;
 }

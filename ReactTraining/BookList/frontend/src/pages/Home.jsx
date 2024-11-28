@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import restPanda from '../assets/restPanda.png';
 
 const Home = () => {
 
@@ -28,11 +27,7 @@ const Home = () => {
           {/* Illustration Section */}
           <div className="mt-10 flex flex-col items-center">
             <div className="w-3/4 sm:w-1/2">
-              {/* <img */}
-                {/* src={restPanda} // Use the imported image
-                alt="Resting Panda"
-                className="rounded-lg shadow-lg"
-              /> */}
+         
             </div>
             <p className="mt-6 text-gray-500 text-center">
               Join millions of readers and explore your next favorite book.

@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import { message, Spin } from 'antd'; // Importing Spin component from antd
-import { addToCart } from "../../store/cartDetails"; // Assuming this is the correct import for your addToCart action
+import { message, Spin } from 'antd';
+import { addToCart } from "../../store/cartDetails";
 import { useDispatch } from "react-redux";
 
 const BookAPIDetails = () => {
+
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [similarBooks, setSimilarBooks] = useState([]); // State for similar books
+  const [similarBooks, setSimilarBooks] = useState([]);
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [loadingSimilarBooks, setLoadingSimilarBooks] = useState(false); // State for similar books loading
-  const [quantity, setQuantity] = useState(1); // State for quantity (default to 1)
+  const [loadingSimilarBooks, setLoadingSimilarBooks] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -21,15 +22,15 @@ const BookAPIDetails = () => {
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        // Fetching book details from Google Books API
+        // Fetching book details from Google Books API through id
         const response = await axios.get(
           `https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`
         );
-        console.log("Book data ", response.data);
         setBook(response.data);
 
         // Fetch similar books based on genre
         const genres = response.data.volumeInfo.categories || [];
+        
         if (genres.length > 0) {
           fetchSimilarBooks(genres[0]); // Using the first genre as filter
         }
@@ -47,7 +48,9 @@ const BookAPIDetails = () => {
 
   // Fetch similar books based on genre
   const fetchSimilarBooks = async (genre) => {
-    setLoadingSimilarBooks(true); // Set loading to true when fetching similar books
+    
+    setLoadingSimilarBooks(true);
+
     try {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=5&key=${API_KEY}`
@@ -56,7 +59,7 @@ const BookAPIDetails = () => {
     } catch (error) {
       console.error("Error fetching similar books:", error);
     } finally {
-      setLoadingSimilarBooks(false); // Set loading to false after fetching similar books
+      setLoadingSimilarBooks(false);
     }
   };
 
@@ -65,24 +68,24 @@ const BookAPIDetails = () => {
     setShowFullDescription(!showFullDescription);
   };
 
-  // Calculate book price based on page count
+  
   const calculateBookPrice = (pageCount) => {
     if (pageCount) {
-      return pageCount + 88; // Price is pageCount + 88
+      return pageCount + 88; // Price = pageCount + 88
     }
     return 0; // Default price if no page count
   };
 
-  // Handle Add to Cart
+
   const handleAddToCart = () => {
     if (book) {
       const price = calculateBookPrice(book.volumeInfo.pageCount);
       const bookDetails = {
-        bookId: book.id, // Ensure this is used consistently for unique identification
+        bookId: book.id,
         bookName: book.volumeInfo.title,
         coverImageUrl: book.volumeInfo.imageLinks?.thumbnail,
         price,
-        quantity: quantity, // Use the quantity selected by the user
+        quantity: quantity
       };
 
       message.success("Item added to cart",1)
@@ -90,12 +93,11 @@ const BookAPIDetails = () => {
     }
   };
 
-  // Increase quantity
   const increaseQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
-  // Decrease quantity (but not below 1)
+
   const decreaseQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
@@ -109,7 +111,6 @@ const BookAPIDetails = () => {
             <p>Loading book details...</p>
           ) : book ? (
             <div className="flex flex-wrap">
-              {/* Book Cover */}
               {book.volumeInfo.imageLinks?.thumbnail && (
                 <div className="flex-none max-w-xs mb-8">
                   <img
@@ -194,6 +195,7 @@ const BookAPIDetails = () => {
 
                 {/* Description */}
                 <div className="mt-4 text-gray-700">
+
                   {book.volumeInfo.description && book.volumeInfo.description.length > 500 ? (
                     <>
                       <p>
@@ -211,6 +213,7 @@ const BookAPIDetails = () => {
                   ) : (
                     <span dangerouslySetInnerHTML={{ __html: book.volumeInfo.description }} />
                   )}
+                  
                 </div>
 
               </div>
