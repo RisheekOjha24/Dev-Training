@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.list-container-box {
+  height: 90vh;
+  overflow-y: auto;
+  font-family: "DM Sans";
+  padding-right: 16px;
+}
+
+.similar-books-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px; /* Space between book items */
+  padding-bottom: 8px; /* Extra padding to avoid hidden items */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 #e0e0e0; /* Customize scrollbar color */
+}
+
+.similar-books-container::-webkit-scrollbar {
+  height: 8px; /* Set height of the scrollbar */
+}
+
+.similar-books-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar thumb color */
+  border-radius: 10px;
+}
+
+.similar-books-container::-webkit-scrollbar-track {
+  background: #e0e0e0; /* Track color */
+}
+
+.similar-book-item {
+  min-width: 150px; /* Set the minimum width of each book item */
+  max-width: 200px; /* Set the maximum width */
+  flex-shrink: 0; /* Prevent the item from shrinking */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.similar-book-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.similar-book-item h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.similar-book-item p {
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+
+.book-title{
+   font-family: "Comfortaa", sans-serif;
+ font-weight: bolder;
+}
+
+.deatils-section{
+  background-color: #5F9EA0;
+  color: white;
+  padding-left: 20px;
+  border-radius: 10px 0px 0px 80px;
+}
+
+.imgBox{
+  transform: scale(1.2);
+  margin-top: 2rem;
+}
+.card-hover:hover{
+  transform: scale(1.04);
+}
+
+.search-box{
+  width: 50vw;
+  margin: 1rem;
+}
+
+.search-btn{
+  padding: 8px 15px;
+}
+.search-btn:hover{
+  background-color: rgb(51, 50, 50);
+}
+.search-btn:active{
+  background-color: black;
+}
+
+.quantity-btn{
+  font-size: 25px;
+  font-weight: bolder;
+  border-radius: 90%;
+  padding: 0 12px;
+  color: white;
+  /* font-family: */
+  background-color: rgb(38, 190, 170);
+}
+
+.cart-add-btn {
+  background-color: #4CAF50;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  z-index: 1000;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-add-btn:hover {
+  background-color: #45a049; 
+}
+
+.cart-add-btn:active {
+  background-color: #4CAF50;
+}
+
+.badge-cart{
+  position: absolute;
+  top:-10px;
+  left: 40px;
+}
+
+.rm-select-btn{
+  background-color: #800020;
+  color: white;
+  transform: translateY(-5px);
+  border-radius: 28px;
+  cursor: pointer;
+}
+
+.name-top{
+  font-family: Parkinsans;
+  letter-spacing: 2px;
+  font-size: 20px;
+}
+.sidebar{
+  background-color: #002244;
+}
