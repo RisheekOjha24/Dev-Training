@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { message, Spin } from 'antd';
@@ -18,6 +18,7 @@ const BookAPIDetails = () => {
   const dispatch = useDispatch();
 
   const API_KEY = import.meta.env.VITE_API_KEY;
+  const navigate=useNavigate();
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -52,6 +53,7 @@ const BookAPIDetails = () => {
     setLoadingSimilarBooks(true);
 
     try {
+      console.log("Sending genre = ",genre);
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=5&key=${API_KEY}`
       );
@@ -234,11 +236,11 @@ const BookAPIDetails = () => {
             ) : (
               <div className="similar-books-container">
                 {similarBooks.length > 0 ? (
-                  similarBooks.map((similarBook) => (
+                  similarBooks.map((similarBook,index) => (
                     <div
-                      key={similarBook.id}
+                      key={index}
                       className="similar-book-item"
-                      onClick={() => window.open(`/book/api/${similarBook.id}`, "_blank")}
+                      onClick={() => navigate(`/book/api/${similarBook.id}`)}
                     >
                       <div className="h-40 overflow-hidden flex justify-center items-center bg-gray-50">
                         <img

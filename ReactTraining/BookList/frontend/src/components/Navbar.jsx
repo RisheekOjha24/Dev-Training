@@ -12,11 +12,11 @@ const Navbar = () => {
   return (
     <>
       {/* Sidebar */}
-      <div className="w-30 sidebar text-white flex justify-between flex-col items-center p-4" style={{background:'#002244'}}>
+      <div className="w-30 sidebar text-white flex justify-between flex-col items-center p-4 sidebar">
     
         <div className="text-center mb-8">
           <h4 className="text-white text-lg font-semibold name-top">BookShelf</h4>
-          <h4 className='text-white font-bold mt-8'>Welcome {username}</h4>
+          <h4 className='text-white font-bold mt-8 text-lg'>Welcome {username}</h4>
         </div>
         
         {/* Menu */}

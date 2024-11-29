@@ -2,12 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Spin } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const SearchBooks = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(false); // Spinner for infinite scroll
+  const [isFetching, setIsFetching] = useState(false);
   const [searched, setSearched] = useState(false);
   const [page, setPage] = useState(1);
   const [genre, setGenre] = useState("");
@@ -15,6 +16,7 @@ const SearchBooks = () => {
   const observerRef = useRef(null);
 
   const API_KEY = import.meta.env.VITE_API_KEY;
+  const navigate=useNavigate();
 
   useEffect(() => {
     if (searched) {
@@ -128,7 +130,8 @@ const SearchBooks = () => {
   };
 
   const handleBookClick = (id) => {
-    window.open(`/book/api/${id}`, "_blank");
+    navigate(`/book/api/${id}`);
+
   };
 
   const handleGenreChange = (e) => {

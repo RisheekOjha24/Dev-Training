@@ -1,6 +1,8 @@
 const User = require("../models/userSchema");
-
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { generateToken }=require("../utils/token");
+
 
 module.exports.signup = async (req, res) => {
   try {
@@ -35,6 +37,7 @@ module.exports.signup = async (req, res) => {
 };
 
 module.exports.signin= async (req,res)=>{
+  
     const { useremail, password } = req.body;
     try {
    
@@ -48,6 +51,17 @@ module.exports.signin= async (req,res)=>{
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid password." });
       }
+ 
+
+      // creating token
+     const token=generateToken(user._id,user.useremail);
+
+      res.cookie("tokenBook", token, {
+        httpOnly: true, 
+        maxAge: 3600000, 
+        sameSite: 'None', 
+        secure: process.env.NODE_ENV === 'production',
+      });
 
       return res.status(200).json({ username: user.username });
 
@@ -56,4 +70,3 @@ module.exports.signin= async (req,res)=>{
         res.status(500).json({ message: 'Server error' });
     }
 };
-

@@ -10,9 +10,6 @@ const userSlice = createSlice({
     userData:(state,action)=>{
         state.username=action.payload.username;
         state.useremail=action.payload.useremail;
-        console.log("Printing forom state");
-        console.log(state.username);
-        console.log(state.useremail);
     },
   },
 });

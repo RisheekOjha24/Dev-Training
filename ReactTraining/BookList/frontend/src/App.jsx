@@ -8,8 +8,6 @@ import BookAPIDetails from './pages/BookAPIDetails';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Cart from './pages/Cart';
-import Checkout from './components/Checkout';
-
 
 function App() {
   return (
@@ -23,7 +21,6 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/cart' element={<Cart/>}/>
-          <Route path='/checkout' element={<Checkout/>}/>
         </Routes>
     </Router>
   );
