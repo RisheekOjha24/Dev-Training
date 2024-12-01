@@ -12,6 +12,11 @@
   padding-right: 16px;
 }
 
+.paypal-head{
+  font-size: 25px;
+  font-weight: bolder;
+  margin: 2rem;
+}
 .similar-books-container {
   display: flex;
   overflow-x: auto;

@@ -2,14 +2,15 @@ const Cart = require("../models/cartSchmea")
 
 const getCartItem = async (req, res) => {
   try {
-    const userId = req.user.id; // From the authenticate middleware (req.user is populated)
-
+    const userId = req?.user?.id; // From the authenticate middleware (req.user is populated)
     const cart = await Cart.findOne({ userId });
+
+    console.log(cart,"cart");
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
-
+  
     res.status(200).json(cart.cartItems);
   } catch (err) {
     console.error(err);
@@ -120,9 +121,36 @@ const cartUpdatItem = async (req, res) => {
   }
 };
 
+const bulkRemoveItem = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { bookIds } = req.body; //array of bookids
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    // Filtering out all the items with the given bookIds
+    cart.cartItems = cart.cartItems.filter(
+      (item) => !bookIds.includes(item.bookId)
+    );
+ 
+    await cart.save();
+    res.status(200).json({ message: "Items removed from cart" });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Server error while removing items from cart" });
+  }
+};
+
 module.exports = {
   getCartItem,
   cartAddItem,
   cartDeleteItem,
   cartUpdatItem,
+  bulkRemoveItem,
 };

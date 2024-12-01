@@ -1,16 +1,20 @@
 import React from "react";
 import sweetAlert from "./sweetNotification";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../store/cartDetails";
 
 const Logout = () => {
-
+  
+  const dispatch = useDispatch();
   const navigate=useNavigate();
 
   const handleLogout = async() => {
     const response=await sweetAlert();
-    if(!response.isConfirmed)return;
+    if(!response.isConfirmed) return;
+
     localStorage.clear();
+    dispatch(clearCart())
     navigate('/login');
   };
 

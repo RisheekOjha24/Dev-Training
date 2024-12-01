@@ -1,19 +1,41 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart, updateQuantity } from '../../store/cartDetails';
-import Navbar from '../components/Navbar';
-import { message } from 'antd';
-import sweetAlert from '../components/sweetNotification';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removeFromCart,
+  updateQuantity,
+  updateItemInCart,
+  bulkRemoveItemsFromCart,
+  removeItemFromCart,
+} from "../../store/cartDetails";
+import Navbar from "../components/Navbar";
+import { message } from "antd";
+import sweetAlert from "../components/sweetNotification";
 import { FaTrash } from "react-icons/fa";
-import Checkout from '../components/Checkout';
+import Checkout from "../components/Checkout";
+import { debounce } from "lodash";
+import { useCallback } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartData.cartItems);
-  const [isCheckoutBtnClick,setCheckoutBtnClikc]=useState(false);
-  
-  const [selectedItems, setSelectedItems] = useState([]); // State to track selected items
 
+  const [isCheckoutBtnClick, setCheckoutBtnClick] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  // Debounced function for updating item in cart
+  const debouncedUpdateItemInCart = useCallback(
+    debounce((bookId, quantity) => {
+      dispatch(updateItemInCart({ bookId, quantity }));
+    }, 2000),
+    [] // Dependency array ensures this is created only once
+  );
+
+  const calculateTotal=(cartItems)=>{
+    let newtotalPrice=cartItems
+  .reduce((total, item) => total + item.price * item.quantity, 0)
+  .toFixed(2);
+    return newtotalPrice;
+  }
 
   const handleQuantityChange = (bookId, quantity) => {
     if (quantity < 1) {
@@ -21,66 +43,84 @@ const Cart = () => {
       return;
     }
     dispatch(updateQuantity({ bookId, quantity }));
+    debouncedUpdateItemInCart(bookId, quantity);
   };
 
   const handleRemoveItem = async (bookId) => {
     const response = await sweetAlert();
     if (!response.isConfirmed) return;
-
+    dispatch(removeItemFromCart(bookId));
     dispatch(removeFromCart(bookId));
     message.success("Item removed from cart.", 1);
   };
 
-  // Handle selection change (checkbox)
   const handleCheckboxChange = (bookId) => {
     setSelectedItems((prevSelected) => {
       if (prevSelected.includes(bookId)) {
-        return prevSelected.filter(id => id !== bookId);
+        return prevSelected.filter((id) => id !== bookId);
       } else {
         return [...prevSelected, bookId];
       }
     });
   };
 
-  const handleBulkRemove = async () => {
-    const response = await sweetAlert();
-    if (!response.isConfirmed) return;
+const handleBulkRemove = async () => {
+  const response = await sweetAlert();  // Show confirmation dialog
+  if (!response.isConfirmed) return;
 
-    selectedItems.forEach(bookId => {
-      dispatch(removeFromCart(bookId));
-    });
-    setSelectedItems([]); 
+  // Dispatch the bulk removal action using the bulkRemoveItemsFromCart async thunk
+  try {
+    // Dispatch removeItemFromCart sequentially (if necessary, but it can be optimized)
+    for (const bookId of selectedItems) {
+      console.log("Dispatching removeItemFromCart for:", bookId);
+      // Optionally, you can dispatch each item removal one by one
+      await dispatch(removeItemFromCart(bookId));  // Ensure sequential removal
+    }
+
+    // After all items are removed, dispatch the bulk removal action
+    await dispatch(bulkRemoveItemsFromCart(selectedItems));
+
+    // Clear selected items after removal
+    setSelectedItems([]);
+
+    // Notify user of success
     message.success("Selected items removed from cart.", 1);
-  };
 
-  const handleCheckout=()=>{
-    setCheckoutBtnClikc(!isCheckoutBtnClick);
+  } catch (error) {
+    // Handle any errors
+    message.error("Error removing selected items.", 1);
+    console.error("Error during bulk removal:", error);
+    }
   }
+
+  const handleCheckout = () => {
+    setCheckoutBtnClick(!isCheckoutBtnClick);
+  };
 
   return (
     <div className="flex h-screen">
       <Navbar />
       <div className="flex-1 p-8 list-container-box">
-
         {cartItems.length === 0 ? (
           <div className="text-center text-lg font-semibold text-gray-500">
             No items in your cart.
           </div>
         ) : (
           <div className="space-y-6">
-            {/* Cart Table */}
             <table className="min-w-full bg-white shadow-lg rounded-lg">
               <thead>
                 <tr className="border-b">
                   <th className="p-4 text-left">
                     <input
                       type="checkbox"
-                      checked={selectedItems.length === cartItems.length} 
+                      checked={selectedItems.length === cartItems.length}
                       onChange={() => {
                         if (selectedItems.length === cartItems.length) {
-                          setSelectedItems([]); 
+                          setSelectedItems([]);
                         } else {
-                          setSelectedItems(cartItems.map(item => item.bookId)); // Select all
+                          setSelectedItems(
+                            cartItems.map((item) => item.bookId)
+                          );
                         }
                       }}
                     />
@@ -117,27 +157,36 @@ const Cart = () => {
                       <div className="flex items-center space-x-2">
                         <button
                           className="px-3 py-1 bg-gray-300 rounded-md quantity-btn"
-                          onClick={() => handleQuantityChange(item.bookId, item.quantity - 1)}
+                          onClick={() =>
+                            handleQuantityChange(item.bookId, item.quantity - 1)
+                          }
                         >
                           -
                         </button>
                         <input
                           type="number"
-                          readOnly
                           value={item.quantity}
-                          onChange={(e) => handleQuantityChange(item.bookId, parseInt(e.target.value))}
+                          onChange={(e) =>
+                            handleQuantityChange(
+                              item.bookId,
+                              parseInt(e.target.value, 10) || 1
+                            )
+                          }
                           className="w-16 text-center border border-gray-300 rounded-md"
-                          min="1"
                         />
                         <button
                           className="px-3 py-1 bg-gray-300 rounded-md quantity-btn"
-                          onClick={() => handleQuantityChange(item.bookId, item.quantity + 1)}
+                          onClick={() =>
+                            handleQuantityChange(item.bookId, item.quantity + 1)
+                          }
                         >
                           +
                         </button>
                       </div>
                     </td>
-                    <td className="p-4">₹{(item.price * item.quantity).toFixed(2)}</td>
+                    <td className="p-4">
+                      ₹{(item.price * item.quantity).toFixed(2)}
+                    </td>
                     <td className="p-4">
                       <button
                         onClick={() => handleRemoveItem(item.bookId)}
@@ -153,11 +202,9 @@ const Cart = () => {
           </div>
         )}
 
-        {/* Bulk Remove and Total Price */}
         {cartItems.length > 0 && (
           <div className="mt-8 flex justify-between items-center">
             <div className="flex space-x-4">
-              {/* Bulk Remove Button */}
               <button
                 onClick={handleBulkRemove}
                 className="px-4 py-1 cursor-point rm-select-btn"
@@ -166,21 +213,24 @@ const Cart = () => {
                 Remove Selected
               </button>
               <div className="text-xl font-semibold">
-                Total: ₹{cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+                Total: ₹
+                {calculateTotal(cartItems)}
               </div>
             </div>
-
-            {/* Checkout Button */}
             <button
               className="px-6 py-2 bg-blue-500 text-white rounded-md"
-              onClick={() => handleCheckout()}
+              onClick={handleCheckout}
             >
               Checkout
             </button>
           </div>
         )}
       </div>
-      {isCheckoutBtnClick && <Checkout/>}
+      {isCheckoutBtnClick && (
+        <Checkout
+          calculateTotal={calculateTotal}
+        />
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {message} from "antd";
-import { cartAddItem, cartRemoveItem, cartUpdateItem } from "../utils/APIRoute";
+import {getCartItem } from "../utils/APIRoute";
 
 // Initial state, with cartItems loaded from localStorage if available
 const initialState = {

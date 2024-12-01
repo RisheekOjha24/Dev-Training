@@ -1,103 +1,71 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { message } from "antd"; // For a better user experience with notifications
 
-const Checkout = () => {
-  const [paymentMethod, setPaymentMethod] = useState("upi");
+export default function PaypalPayment() {
+  const cartItems = useSelector((state) => state.cartData.cartItems);
+  const [isLoading, setIsLoading] = useState(false); // Loading state for PayPal initialization
+  const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
+  const calculateTotal = (cartItems) => {
+    let totalPrice = cartItems
+      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .toFixed(2);
+    return totalPrice;
+  };
+
+  const handleApprove = (data, actions) => {
+    setIsLoading(true); // Set loading to true when payment is being processed
+    return actions.order.capture().then((details) => {
+      setIsLoading(false); // Set loading to false after successful payment
+      message.success(
+        `Payment Successful: ${details.payer.name.given_name}`,
+        1
+      );
+      // Redirect or show confirmation UI
+    });
+  };
+
+  const handleCancel = () => {
+    message.warning("Payment Cancelled", 1);
+  };
+
+  const handleError = (error) => {
+    setIsLoading(false);
+    message.error(`Payment failed: ${error}`, 1);
+  };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Checkout</h2>
-
-      {/* Payment Method Tabs */}
-      <div className="flex justify-around mb-6">
-        <button
-          className={`py-2 px-4 rounded-md ${
-            paymentMethod === "upi"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-600"
-          }`}
-          onClick={() => setPaymentMethod("upi")}
-        >
-          UPI
-        </button>
-        <button
-          className={`py-2 px-4 rounded-md ${
-            paymentMethod === "card"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-600"
-          }`}
-          onClick={() => setPaymentMethod("card")}
-        >
-          Card
-        </button>
-        <button
-          className={`py-2 px-4 rounded-md ${
-            paymentMethod === "netbanking"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-600"
-          }`}
-          onClick={() => setPaymentMethod("netbanking")}
-        >
-          Net Banking
-        </button>
-      </div>
-
-      {/* Payment Method Content */}
-      <div className="border-t pt-4">
-        {paymentMethod === "upi" && (
-          <div>
-            <label className="block text-gray-700 mb-2">Enter UPI ID</label>
-            <input
-              type="text"
-              placeholder="example@upi"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-        )}
-        {paymentMethod === "card" && (
-          <div>
-            <label className="block text-gray-700 mb-2">Card Number</label>
-            <input
-              type="text"
-              placeholder="1234 5678 9012 3456"
-              className="w-full px-4 py-2 border rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <label className="block text-gray-700 mb-2">Expiry Date</label>
-            <input
-              type="text"
-              placeholder="MM/YY"
-              className="w-full px-4 py-2 border rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <label className="block text-gray-700 mb-2">CVV</label>
-            <input
-              type="text"
-              placeholder="123"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-        )}
-        {paymentMethod === "netbanking" && (
-          <div>
-            <label className="block text-gray-700 mb-2">
-              Select Your Bank
-            </label>
-            <select
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
-              <option value="sbi">State Bank of India</option>
-              <option value="hdfc">HDFC Bank</option>
-              <option value="icici">ICICI Bank</option>
-              <option value="axis">Axis Bank</option>
-            </select>
-          </div>
+    <PayPalScriptProvider
+      options={{
+        "client-id":
+          clientId,
+          "currency":"USD"
+      }}
+    >
+      <div>
+        <h1 className="paypal-head">PayPal Payment</h1>
+        {isLoading ? (
+          <div>Loading...</div> // Show loading text while the PayPal buttons are initializing
+        ) : (
+          <PayPalButtons
+            createOrder={(data, actions) => {
+              return actions.order.create({
+                purchase_units: [
+                  {
+                    amount: {
+                      value: `${calculateTotal(cartItems)}`
+                    },
+                  },
+                ],
+              });
+            }}
+            onApprove={handleApprove}
+            onCancel={handleCancel}
+            onError={handleError}
+          />
         )}
       </div>
-
-      {/* Submit Button */}
-      <button className="mt-6 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
-        Pay Now
-      </button>
-    </div>
+    </PayPalScriptProvider>
   );
-};
-
-export default Checkout;
+}

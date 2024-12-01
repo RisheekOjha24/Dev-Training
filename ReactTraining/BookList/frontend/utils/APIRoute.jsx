@@ -10,3 +10,4 @@ export const getCartItem=`${host}/cart/getCartItem`
 export const cartAddItem=`${host}/cart/addItem`;
 export const cartRemoveItem=`${host}/cart/removeItem`;
 export const cartUpdateItem=`${host}/cart/updateItem`;
+export const cartBulkRemoveItem = `${host}/cart/bulkRemoveItem`;

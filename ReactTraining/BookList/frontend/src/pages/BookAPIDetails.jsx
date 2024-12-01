@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { message, Spin } from 'antd';
-import { addToCart } from "../../store/cartDetails";
+import { addToCart, addItemToCart } from "../../store/cartDetails";
 import { useDispatch } from "react-redux";
 
 const BookAPIDetails = () => {
@@ -91,6 +91,7 @@ const BookAPIDetails = () => {
       };
 
       message.success("Item added to cart",1)
+      dispatch(addItemToCart(bookDetails));
       dispatch(addToCart(bookDetails));
     }
   };

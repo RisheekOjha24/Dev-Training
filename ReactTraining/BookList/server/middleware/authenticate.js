@@ -1,7 +1,7 @@
 const { verifyToken } = require("../utils/token");
 
 const authenticate = (req, res, next) => {
-  const token = req.cookies.tokenBook;
+const token = req.cookies.tokenBook;
 
   if (!token) {
     return res.status(401).json({ message: "Authentication token missing" });

@@ -5,9 +5,9 @@ import axios from 'axios';  // Import axios for making requests
 import { signin } from '../../utils/APIRoute';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import {message } from "antd";
 import { userData } from '../../store/userDetails';
 import babyPanda2 from "../assets/babyPanda2.png"
+import { fetchCartItems } from "../../store/cartDetails";
 
 const Login = () => {
 
@@ -44,6 +44,9 @@ const Login = () => {
       localStorage.setItem("username",response.data.username);
 
       dispatch(userData({username:response.data.username,useremail:formData.email}));
+      dispatch(fetchCartItems());
+
+
       navigate("/")
 
     } catch (error) {

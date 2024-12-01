@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Spin } from "antd";
 import { useNavigate } from "react-router-dom";
+import { debounce } from "lodash";
 
 const SearchBooks = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,23 +14,26 @@ const SearchBooks = () => {
   const [page, setPage] = useState(1);
   const [genre, setGenre] = useState("");
   const [fetchedBookIds, setFetchedBookIds] = useState(new Set());
+  const [hasMore, setHasMore] = useState(true); // To track if more data is available
   const observerRef = useRef(null);
 
   const API_KEY = import.meta.env.VITE_API_KEY;
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (searched) {
-      fetchBooks();
-    } else {
+    if (searchQuery === "") {
+      // If search query is empty, fetch random books like on page load
       fetchRandomBooks();
+    } else if (searched) {
+      // If there is a search query, fetch books based on the query
+      fetchBooks();
     }
-  }, [page, genre, searched]);
+  }, [page, genre, searched, searchQuery]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !isFetching && !loading) {
+        if (entries[0].isIntersecting && !isFetching && !loading && hasMore) {
           setIsFetching(true);
           setPage((prevPage) => prevPage + 1);
         }
@@ -46,9 +50,42 @@ const SearchBooks = () => {
         observer.unobserve(observerRef.current);
       }
     };
-  }, [isFetching, loading]);
+  }, [isFetching, loading, hasMore]);
 
-  const fetchRandomBooks = async () => {
+  const fetchBooks = useCallback(async () => {
+    setLoading(true);
+    try {
+      const genreFilter = genre ? `+subject:${genre}` : "";
+      const query = encodeURIComponent(searchQuery); // Encode the query
+      const response = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}${genreFilter}&maxResults=10&startIndex=${
+          (page - 1) * 10
+        }&key=${API_KEY}`
+      );
+
+      if (response.data.totalItems === 0) {
+        setHasMore(false);
+      } else {
+        const newBooks = (response.data.items || []).filter(
+          (book) => !fetchedBookIds.has(book.id)
+        );
+
+        setBooks((prevBooks) => [...prevBooks, ...newBooks]);
+        setFetchedBookIds((prevIds) => {
+          const updatedIds = new Set(prevIds);
+          newBooks.forEach((book) => updatedIds.add(book.id));
+          return updatedIds;
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    } finally {
+      setLoading(false);
+      setIsFetching(false);
+    }
+  }, [searchQuery, genre, page, API_KEY, fetchedBookIds]);
+
+  const fetchRandomBooks = useCallback(async () => {
     setLoading(true);
     try {
       const genreFilter = genre ? `+subject:${genre}` : "";
@@ -58,87 +95,88 @@ const SearchBooks = () => {
         }&key=${API_KEY}`
       );
 
-      const newBooks = (response.data.items || []).filter(
-        (book) => !fetchedBookIds.has(book.id)
-      );
+      if (response.data.totalItems === 0) {
+        setHasMore(false);
+      } else {
+        const newBooks = (response.data.items || []).filter(
+          (book) => !fetchedBookIds.has(book.id)
+        );
 
-      setBooks((prevBooks) => [...prevBooks, ...newBooks]);
-      setFetchedBookIds((prevIds) => {
-        const updatedIds = new Set(prevIds);
-        newBooks.forEach((book) => updatedIds.add(book.id));
-        return updatedIds;
-      });
+        setBooks((prevBooks) => [...prevBooks, ...newBooks]);
+        setFetchedBookIds((prevIds) => {
+          const updatedIds = new Set(prevIds);
+          newBooks.forEach((book) => updatedIds.add(book.id));
+          return updatedIds;
+        });
+      }
     } catch (error) {
       console.error("Error fetching books:", error);
     } finally {
       setLoading(false);
-      setIsFetching(false); // Reset spinner state
+      setIsFetching(false);
     }
-  };
+  }, [genre, page, API_KEY, fetchedBookIds]);
 
-  const fetchBooks = async () => {
-    setLoading(true);
-    try {
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      setLoading(true);
+      setSearched(true);
+      setBooks([]); // Clear books
+      setFetchedBookIds(new Set()); // Clear fetched book IDs
+      setPage(1); // Reset to the first page
+      setHasMore(true); // Reset pagination
+
       const genreFilter = genre ? `+subject:${genre}` : "";
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}${genreFilter}&maxResults=10&startIndex=${
-          (page - 1) * 10
-        }&key=${API_KEY}`
-      );
+      const encodedQuery = encodeURIComponent(query);
 
-      const newBooks = (response.data.items || []).filter(
-        (book) => !fetchedBookIds.has(book.id)
-      );
+      axios
+        .get(
+          `https://www.googleapis.com/books/v1/volumes?q=${encodedQuery}${genreFilter}&maxResults=10&key=${API_KEY}`
+        )
+        .then((response) => {
+          if (response.data.totalItems === 0) {
+            setHasMore(false);
+          } else {
+            const newBooks = response.data.items || [];
+            setBooks(newBooks);
+            setFetchedBookIds(new Set(newBooks.map((book) => book.id)));
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching books:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 1000),
+    [genre]
+  );
+const handleSearchQueryChange = (e) => {
+  const value = e.target.value; // Remove .trim() here to allow spaces
+  setSearchQuery(value);
 
-      setBooks((prevBooks) => [...prevBooks, ...newBooks]);
-      setFetchedBookIds((prevIds) => {
-        const updatedIds = new Set(prevIds);
-        newBooks.forEach((book) => updatedIds.add(book.id));
-        return updatedIds;
-      });
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    } finally {
-      setLoading(false);
-      setIsFetching(false); // Reset spinner state
-    }
-  };
+  if (value === "") {
+    setSearched(false);
+    setBooks([]); // Clear the books
+    setFetchedBookIds(new Set()); // Reset the fetched book IDs
+    setPage(1); // Reset page to 1
+    setHasMore(true); // Reset hasMore to true
+  } else {
+    debouncedSearch(value); // Trigger debounced search
+  }
+};
 
-  const handleSearchClick = async () => {
-    if (!searchQuery) return;
 
-    setLoading(true);
-    setSearched(true);
-    setBooks([]);
-    setFetchedBookIds(new Set());
-    setPage(1);
-
-    try {
-      const genreFilter = genre ? `+subject:${genre}` : "";
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}${genreFilter}&maxResults=10`
-      );
-
-      const newBooks = response.data.items || [];
-      setBooks(newBooks);
-      setFetchedBookIds(new Set(newBooks.map((book) => book.id)));
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    } finally {
-      setLoading(false);
-    }
+  const handleGenreChange = (e) => {
+    setGenre(e.target.value);
+    setBooks([]); // Clear books when genre changes
+    setFetchedBookIds(new Set()); // Clear fetched book IDs
+    setPage(1); // Reset page to 1
+    setHasMore(true); // Reset hasMore to true
   };
 
   const handleBookClick = (id) => {
     navigate(`/book/api/${id}`);
-
-  };
-
-  const handleGenreChange = (e) => {
-    setGenre(e.target.value);
-    setBooks([]);
-    setFetchedBookIds(new Set());
-    setPage(1);
   };
 
   return (
@@ -149,18 +187,11 @@ const SearchBooks = () => {
           <div className="mb-4 flex items-center bg-white justify-center">
             <input
               type="text"
-              placeholder="Search by book name, author name, publisher or isbn number"
+              placeholder="Search by book name, author name, publisher or ISBN number"
               className="p-2 border border-gray-300 rounded-md search-box"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleSearchQueryChange}
             />
-            <button
-              onClick={handleSearchClick}
-              className="ml-2 p-2 bg-black text-white rounded-md search-btn"
-            >
-              Search
-            </button>
-
             <select
               value={genre}
               onChange={handleGenreChange}
@@ -191,7 +222,7 @@ const SearchBooks = () => {
                       className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden cursor-pointer card-hover mb-10 relative"
                       onClick={() => handleBookClick(book.id)}
                     >
-                      <div className="h-40 overflow-hidden flex justify-center items-center bg-gray-50 ">
+                      <div className="h-40 overflow-hidden flex justify-center items-center bg-gray-50">
                         <img
                           src={book.volumeInfo.imageLinks?.thumbnail}
                           alt={book.volumeInfo.title}
@@ -218,10 +249,9 @@ const SearchBooks = () => {
             </div>
 
             <div ref={observerRef} />
-            {isFetching && (
+            {isFetching && hasMore && (
               <div className="flex justify-center mt-6">
-                <div className="loader" />
-                <Spin size="large"/>
+                <Spin size="large" />
               </div>
             )}
           </div>
